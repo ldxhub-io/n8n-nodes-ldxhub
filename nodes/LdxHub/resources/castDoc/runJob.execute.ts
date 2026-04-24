@@ -1,7 +1,7 @@
 import type { IDataObject, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 
-import { downloadFile } from '../../shared/files';
+import { downloadFile, uploadFile } from '../../shared/files';
 import { pollJobUntilDone } from '../../shared/polling';
 import { ldxHubApiRequest } from '../../shared/transport';
 
@@ -21,10 +21,6 @@ const OUTPUT_MIME_TYPES: Record<string, string> = {
 	pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 };
 
-// Binary property name used for the output file. Hardcoded to match n8n
-// convention for nodes that produce a single binary output.
-const OUTPUT_BINARY_FIELD = 'data';
-
 export async function runJobExecute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
@@ -33,8 +29,8 @@ export async function runJobExecute(
 
 	for (let i = 0; i < items.length; i++) {
 		try {
+			const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i) as string;
 			const engine = this.getNodeParameter('engine', i) as string;
-			const fileId = this.getNodeParameter('file_id', i) as string;
 			const outputFormat = this.getNodeParameter('output_format', i) as string;
 			const pollingSettings = this.getNodeParameter(
 				'pollingSettings',
@@ -42,9 +38,16 @@ export async function runJobExecute(
 				{},
 			) as PollingSettings;
 
+			const binaryMeta = this.helpers.assertBinaryData(i, binaryPropertyName);
+			const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+			const filename = binaryMeta.fileName ?? 'input.pdf';
+			const mimeType = binaryMeta.mimeType ?? 'application/octet-stream';
+
+			const uploadRes = await uploadFile.call(this, buffer, filename, mimeType);
+
 			const jobBody: IDataObject = {
 				engine,
-				file_id: fileId,
+				file_id: uploadRes.file_id,
 				output_format: outputFormat,
 			};
 			const jobRes = (await ldxHubApiRequest.call(
@@ -93,7 +96,7 @@ export async function runJobExecute(
 					output_file_id: finalJob.output_file_id,
 				},
 				binary: {
-					[OUTPUT_BINARY_FIELD]: outputBinary,
+					[binaryPropertyName]: outputBinary,
 				},
 				pairedItem: { item: i },
 			});

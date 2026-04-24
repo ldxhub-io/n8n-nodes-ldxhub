@@ -8,6 +8,16 @@ const showOnlyForRunJob = {
 export const runJobFields: INodeProperties[] = [
 	// ---------- Main parameters ----------
 	{
+		displayName: 'Input Binary Field',
+		name: 'binaryPropertyName',
+		type: 'string',
+		default: 'data',
+		required: true,
+		description:
+			'Name of the binary property from the previous node that contains the file to convert',
+		displayOptions: { show: showOnlyForRunJob },
+	},
+	{
 		displayName: 'Engine Name or ID',
 		name: 'engine',
 		type: 'options',
@@ -18,15 +28,6 @@ export const runJobFields: INodeProperties[] = [
 		default: '',
 		description:
 			'CastDoc engine to use. Click to load available engines from LDXhub. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-		displayOptions: { show: showOnlyForRunJob },
-	},
-	{
-		displayName: 'File ID',
-		name: 'file_id',
-		type: 'string',
-		required: true,
-		default: '',
-		description: 'ID of a previously uploaded PDF file (from POST /files)',
 		displayOptions: { show: showOnlyForRunJob },
 	},
 	{
