@@ -25,17 +25,25 @@ export type PollConfig = {
 	pollingMaxAttempts: number;
 };
 
+export type JobPollTarget = {
+	jobId: string;
+	endpoint: string;
+	serviceLabel: string;
+};
+
 export async function pollJobUntilDone(
 	this: IExecuteFunctions,
-	jobId: string,
+	target: JobPollTarget,
 	config: PollConfig,
 	itemIndex: number,
 ): Promise<JobResponse> {
+	const { jobId, endpoint, serviceLabel } = target;
+
 	for (let attempt = 1; attempt <= config.pollingMaxAttempts; attempt++) {
 		const res = (await ldxHubApiRequest.call(
 			this,
 			'GET',
-			`/refineloop/jobs/${encodeURIComponent(jobId)}`,
+			endpoint,
 			undefined,
 			{ wait: config.serverWaitSeconds },
 		)) as JobResponse;
@@ -48,7 +56,7 @@ export async function pollJobUntilDone(
 				const msg = res.error?.message ?? 'no error details returned by API';
 				throw new NodeOperationError(
 					this.getNode(),
-					`RefineLoop job ${jobId} failed${code}: ${msg}`,
+					`${serviceLabel} job ${jobId} failed${code}: ${msg}`,
 					{ itemIndex },
 				);
 			}
@@ -58,7 +66,7 @@ export async function pollJobUntilDone(
 			default:
 				throw new NodeOperationError(
 					this.getNode(),
-					`Unexpected status '${res.status}' for RefineLoop job ${jobId}`,
+					`Unexpected status '${res.status}' for ${serviceLabel} job ${jobId}`,
 					{ itemIndex },
 				);
 		}
@@ -66,7 +74,7 @@ export async function pollJobUntilDone(
 
 	throw new NodeOperationError(
 		this.getNode(),
-		`RefineLoop job ${jobId} exceeded max poll attempts (${config.pollingMaxAttempts})`,
+		`${serviceLabel} job ${jobId} exceeded max poll attempts (${config.pollingMaxAttempts})`,
 		{ itemIndex },
 	);
 }

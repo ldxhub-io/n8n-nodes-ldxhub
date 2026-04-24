@@ -7,8 +7,13 @@ import type {
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
 import { getModels } from './methods/loadOptions/getModels';
+import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
+import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
+import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOutputFormats';
 import { refineLoopDescription } from './resources/refineLoop';
-import { runJobExecute } from './resources/refineLoop/runJob.execute';
+import { runJobExecute as refineLoopRunJobExecute } from './resources/refineLoop/runJob.execute';
+import { renderOcrDescription } from './resources/renderOcr';
+import { runJobExecute as renderOcrRunJobExecute } from './resources/renderOcr/runJob.execute';
 
 export class LdxHub implements INodeType {
 	description: INodeTypeDescription = {
@@ -49,16 +54,24 @@ export class LdxHub implements INodeType {
 						name: 'RefineLoop',
 						value: 'refineLoop',
 					},
+					{
+						name: 'RenderOCR',
+						value: 'renderOcr',
+					},
 				],
 				default: 'refineLoop',
 			},
 			...refineLoopDescription,
+			...renderOcrDescription,
 		],
 	};
 
 	methods = {
 		loadOptions: {
 			getModels,
+			getRenderOcrEngines,
+			getRenderOcrLanguages,
+			getRenderOcrOutputFormats,
 		},
 	};
 
@@ -68,7 +81,10 @@ export class LdxHub implements INodeType {
 		const operation = this.getNodeParameter('operation', 0) as string;
 
 		if (resource === 'refineLoop' && operation === 'runJob') {
-			return runJobExecute.call(this, items);
+			return refineLoopRunJobExecute.call(this, items);
+		}
+		if (resource === 'renderOcr' && operation === 'runJob') {
+			return renderOcrRunJobExecute.call(this, items);
 		}
 
 		throw new NodeOperationError(

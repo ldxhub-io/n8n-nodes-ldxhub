@@ -5,15 +5,6 @@ import { downloadFile, uploadFile } from '../../shared/files';
 import { pollJobUntilDone } from '../../shared/polling';
 import { ldxHubApiRequest } from '../../shared/transport';
 
-type RefineLoopOptions = {
-	domain?: string;
-	noteLanguage?: string;
-	outputMode?: 'full' | 'translations' | 'none';
-	customInstructions?: string;
-	removeHyphenation?: boolean;
-	excludeNumericSegments?: boolean;
-};
-
 type PollingSettings = {
 	serverWaitSeconds?: number;
 	pollingMaxAttempts?: number;
@@ -24,30 +15,11 @@ type CreateJobResponse = {
 	[key: string]: unknown;
 };
 
-function buildRefineLoopBody(input: {
-	fileId: string;
-	model: string;
-	maxRevisions: number;
-	options: RefineLoopOptions;
-}): IDataObject {
-	const body: IDataObject = {
-		file_id: input.fileId,
-		model: input.model,
-		max_revisions: input.maxRevisions,
-	};
-
-	const o = input.options;
-	if (o.domain) body.domain = o.domain;
-	if (o.noteLanguage) body.note_language = o.noteLanguage;
-	if (o.outputMode) body.output_mode = o.outputMode;
-	if (o.customInstructions) body.custom_instructions = o.customInstructions;
-	if (o.removeHyphenation !== undefined) body.remove_hyphenation = o.removeHyphenation;
-	if (o.excludeNumericSegments !== undefined) {
-		body.exclude_numeric_segments = o.excludeNumericSegments;
-	}
-
-	return body;
-}
+const OUTPUT_MIME_TYPES: Record<string, string> = {
+	docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+	pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+};
 
 export async function runJobExecute(
 	this: IExecuteFunctions,
@@ -58,9 +30,9 @@ export async function runJobExecute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const binaryPropertyName = this.getNodeParameter('binaryPropertyName', i) as string;
-			const model = this.getNodeParameter('model', i) as string;
-			const maxRevisions = this.getNodeParameter('maxRevisions', i) as number;
-			const options = this.getNodeParameter('options', i, {}) as RefineLoopOptions;
+			const engine = this.getNodeParameter('engine', i) as string;
+			const languages = this.getNodeParameter('languages', i) as string[];
+			const outputFormat = this.getNodeParameter('output_format', i) as string;
 			const pollingSettings = this.getNodeParameter(
 				'pollingSettings',
 				i,
@@ -69,21 +41,21 @@ export async function runJobExecute(
 
 			const binaryMeta = this.helpers.assertBinaryData(i, binaryPropertyName);
 			const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-			const filename = binaryMeta.fileName ?? 'input.xliff';
+			const filename = binaryMeta.fileName ?? 'input.pdf';
 			const mimeType = binaryMeta.mimeType ?? 'application/octet-stream';
 
 			const uploadRes = await uploadFile.call(this, buffer, filename, mimeType);
 
-			const jobBody = buildRefineLoopBody({
-				fileId: uploadRes.file_id,
-				model,
-				maxRevisions,
-				options,
-			});
+			const jobBody: IDataObject = {
+				file_id: uploadRes.file_id,
+				engine,
+				languages,
+				output_format: outputFormat,
+			};
 			const jobRes = (await ldxHubApiRequest.call(
 				this,
 				'POST',
-				'/refineloop/jobs',
+				'/renderocr/jobs',
 				jobBody,
 			)) as CreateJobResponse;
 
@@ -91,8 +63,8 @@ export async function runJobExecute(
 				this,
 				{
 					jobId: jobRes.job_id,
-					endpoint: `/refineloop/jobs/${encodeURIComponent(jobRes.job_id)}`,
-					serviceLabel: 'RefineLoop',
+					endpoint: `/renderocr/jobs/${encodeURIComponent(jobRes.job_id)}`,
+					serviceLabel: 'RenderOCR',
 				},
 				{
 					serverWaitSeconds: pollingSettings.serverWaitSeconds ?? 10,
@@ -104,16 +76,19 @@ export async function runJobExecute(
 			if (!finalJob.output_file_id) {
 				throw new NodeOperationError(
 					this.getNode(),
-					`RefineLoop job ${jobRes.job_id} completed but returned no output_file_id`,
+					`RenderOCR job ${jobRes.job_id} completed but returned no output_file_id`,
 					{ itemIndex: i },
 				);
 			}
 
 			const download = await downloadFile.call(this, finalJob.output_file_id);
+			const overrideMime = OUTPUT_MIME_TYPES[outputFormat] ?? download.mimeType;
+			const defaultFilename = `output.${outputFormat}`;
+
 			const outputBinary = await this.helpers.prepareBinaryData(
 				download.buffer,
-				download.filename ?? 'refined.xliff',
-				download.mimeType,
+				download.filename ?? defaultFilename,
+				overrideMime,
 			);
 
 			returnData.push({
@@ -121,7 +96,6 @@ export async function runJobExecute(
 					job_id: jobRes.job_id,
 					status: finalJob.status,
 					output_file_id: finalJob.output_file_id,
-					usage: finalJob.usage,
 				},
 				binary: {
 					[binaryPropertyName]: outputBinary,

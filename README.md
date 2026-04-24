@@ -3,11 +3,12 @@
 [![npm version](https://img.shields.io/npm/v/n8n-nodes-ldxhub.svg)](https://www.npmjs.com/package/n8n-nodes-ldxhub)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-n8n community node for **LDX hub** — AI-powered XLIFF translation refinement using the RefineLoop API.
+n8n community node for **LDX hub** — AI-powered document processing (XLIFF translation refinement, PDF/image OCR to Office formats).
 
 ## Features
 
 - **RefineLoop**: Iteratively improve XLIFF translation quality using frontier AI models (Google Gemini, Anthropic Claude, OpenAI GPT, and more)
+- **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - HTTP long-polling architecture — compatible with n8n Cloud execution model
 - Proven at scale: tested with 1.19M-character academic papers
 
@@ -29,8 +30,19 @@ In your n8n instance:
 
 1. Add **LDXhub API** credentials (API key from your LDX hub dashboard)
 2. Add the **LDXhub** node to your workflow
-3. Select **RefineLoop** resource and **Run Refinement Job** operation
-4. Provide an XLIFF file via binary input, choose an AI model, and set max revisions
+3. Select a resource and operation (see below)
+
+### RefineLoop — XLIFF translation refinement
+
+1. Resource: **RefineLoop** → Operation: **Run Refinement Job**
+2. Provide an XLIFF file via binary input
+3. Choose an AI model and set max revisions
+
+### RenderOCR — PDF/image to Office
+
+1. Resource: **RenderOCR** → Operation: **Run Conversion Job**
+2. Provide a PDF or image file via binary input
+3. Choose an OCR engine, target language, and output format (docx/xlsx/pptx)
 
 Documentation: https://gw.portal.ldxhub.io/introduction
 
