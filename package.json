@@ -1,15 +1,23 @@
 {
 	"name": "n8n-nodes-ldxhub",
 	"version": "0.1.0",
-	"description": "n8n community node for LDXhub AI-powered document processing",
+	"description": "n8n community node for LDX hub — AI-powered XLIFF translation refinement (RefineLoop)",
 	"license": "MIT",
-	"homepage": "https://github.com/ldxhub-io/n8n-nodes-ldxhub",
+	"homepage": "https://ldxlab.io/ldxhub",
+	"bugs": {
+		"url": "https://github.com/ldxhub-io/n8n-nodes-ldxhub/issues"
+	},
 	"keywords": [
 		"n8n-community-node-package",
+		"n8n",
 		"ldxhub",
+		"ldx-hub",
 		"refineloop",
 		"translation",
-		"xliff"
+		"xliff",
+		"xlf",
+		"localization",
+		"ai-translation"
 	],
 	"author": {
 		"name": "ldxhub-io",
@@ -47,6 +55,9 @@
 		"prettier": "3.8.1",
 		"release-it": "19.2.4",
 		"typescript": "5.9.3"
+	},
+	"engines": {
+		"node": ">=20.15"
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
