@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-04-24
+
 ### Added
 - Example workflows in `examples/` directory for all 4 resources
   (StructFlow inline, StructFlow binary, RefineLoop, RenderOCR, CastDoc)
@@ -93,7 +95,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.5.0...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.6.0...HEAD
+[0.6.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.4.1...0.5.0
 [0.4.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.3.0...0.4.0
