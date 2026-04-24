@@ -65,6 +65,8 @@ If the credential test fails, verify:
 
 ## Usage
 
+> 💡 **Quick start**: Import ready-to-use example workflows from [`examples/`](examples/). Each example requires a **LDXhub API** credential and a placeholder input file path to be updated.
+
 1. Add **LDXhub API** credentials (see [Credentials Setup](#credentials-setup))
 2. Add the **LDXhub** node to your workflow
 3. Select a resource and operation (see below)
@@ -77,11 +79,15 @@ If the credential test fails, verify:
    - **Inline Inputs**: Provide ID + Data pairs directly in the workflow (good for small batches, quick prototyping)
    - **Binary File**: Provide a JSONL file as binary input (good for large batches, or as part of an ExtractDoc → StructFlow pipeline)
 
+**Examples**: [Inline mode](examples/structflow-inline-demo.json) · [Binary mode](examples/structflow-binary-demo.json)
+
 ### RefineLoop — XLIFF translation refinement
 
 1. Resource: **RefineLoop** → Operation: **Run Refinement Job**
 2. Provide an XLIFF file via binary input
 3. Choose an AI model and set max revisions
+
+**Example**: [RefineLoop workflow](examples/refineloop-demo.json)
 
 ### RenderOCR — PDF/image to Office
 
@@ -89,11 +95,15 @@ If the credential test fails, verify:
 2. Provide a PDF or image file via binary input
 3. Choose an OCR engine, target language, and output format (docx/xlsx/pptx)
 
+**Example**: [RenderOCR workflow](examples/renderocr-demo.json)
+
 ### CastDoc — text-based PDF to Office (no OCR)
 
 1. Resource: **CastDoc** → Operation: **Run Conversion Job**
 2. Provide a PDF file via binary input
 3. Choose an engine and output format (docx/xlsx/pptx)
+
+**Example**: [CastDoc workflow](examples/castdoc-demo.json)
 
 ## AI Agent Integration
 

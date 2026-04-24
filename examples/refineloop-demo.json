@@ -1,0 +1,87 @@
+{
+  "name": "RefineLoop Demo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -96
+      ],
+      "id": "ae6dffe5-6a5a-41e8-98ec-8ff62040736d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/path/to/your/translation.xlf",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        -96
+      ],
+      "id": "1248ee2f-8ea8-497a-b0ad-f0dbf301bd3e",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-3-flash-preview",
+        "options": {},
+        "pollingSettings": {}
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -96
+      ],
+      "id": "6c618f49-6e61-418b-a1ba-0af68a5afa47",
+      "name": "Run a refinement job",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Run a refinement job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

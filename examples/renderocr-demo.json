@@ -1,0 +1,95 @@
+{
+  "name": "RenderOCR Demo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -320
+      ],
+      "id": "fef0a092-db0d-49f4-98d5-5ec3080b7938",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/path/to/your/document.pdf",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        -64,
+        -320
+      ],
+      "id": "38d54129-83f0-4d76-b73f-a272c19695ba",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "resource": "renderOcr",
+        "engine": "ki/ocr",
+        "languages": [
+          "jpn"
+        ],
+        "output_format": "docx",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -320
+      ],
+      "id": "bb65ed17-50fb-4535-b77c-1d4c8c4b590b",
+      "name": "Run a renderocr job",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Run a renderocr job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}
