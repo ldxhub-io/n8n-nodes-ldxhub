@@ -7,6 +7,7 @@ n8n community node for **LDX hub** — AI-powered document processing (XLIFF tra
 
 ## Features
 
+- **StructFlow**: Extract structured JSON from unstructured text using AI models (medical records, customer feedback, legal documents, and more)
 - **RefineLoop**: Iteratively improve XLIFF translation quality using frontier AI models (Google Gemini, Anthropic Claude, OpenAI GPT, and more)
 - **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - **CastDoc**: Convert text-based PDFs to Word/Excel/PowerPoint without OCR (high-fidelity layout preservation for digital-born documents)
@@ -50,6 +51,14 @@ In your n8n instance:
 1. Resource: **CastDoc** → Operation: **Run Conversion Job**
 2. Provide the File ID of a previously uploaded PDF (from `POST /files`)
 3. Choose an engine and output format (docx/xlsx/pptx)
+
+### StructFlow — extract structured data from text
+
+1. Resource: **StructFlow** → Operation: **Run Extraction Job**
+2. Configure Model, System Prompt, and Example Output
+3. Choose Input Mode:
+   - **Inline Inputs**: Provide ID + Data pairs directly in the workflow (good for small batches, quick prototyping)
+   - **Binary File**: Provide a JSONL file as binary input (good for large batches, or as part of an ExtractDoc → StructFlow pipeline)
 
 Documentation: https://gw.portal.ldxhub.io/introduction
 

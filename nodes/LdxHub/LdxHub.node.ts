@@ -12,12 +12,15 @@ import { getModels } from './methods/loadOptions/getModels';
 import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
 import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
 import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOutputFormats';
+import { getStructFlowModels } from './methods/loadOptions/getStructFlowModels';
 import { castDocDescription } from './resources/castDoc';
 import { runJobExecute as castDocRunJobExecute } from './resources/castDoc/runJob.execute';
 import { refineLoopDescription } from './resources/refineLoop';
 import { runJobExecute as refineLoopRunJobExecute } from './resources/refineLoop/runJob.execute';
 import { renderOcrDescription } from './resources/renderOcr';
 import { runJobExecute as renderOcrRunJobExecute } from './resources/renderOcr/runJob.execute';
+import { structFlowDescription } from './resources/structFlow';
+import { runJobExecute as structFlowRunJobExecute } from './resources/structFlow/runJob.execute';
 
 export class LdxHub implements INodeType {
 	description: INodeTypeDescription = {
@@ -66,12 +69,17 @@ export class LdxHub implements INodeType {
 						name: 'RenderOCR',
 						value: 'renderOcr',
 					},
+					{
+						name: 'StructFlow',
+						value: 'structFlow',
+					},
 				],
 				default: 'refineLoop',
 			},
 			...castDocDescription,
 			...refineLoopDescription,
 			...renderOcrDescription,
+			...structFlowDescription,
 		],
 	};
 
@@ -83,6 +91,7 @@ export class LdxHub implements INodeType {
 			getRenderOcrEngines,
 			getRenderOcrLanguages,
 			getRenderOcrOutputFormats,
+			getStructFlowModels,
 		},
 	};
 
@@ -99,6 +108,9 @@ export class LdxHub implements INodeType {
 		}
 		if (resource === 'renderOcr' && operation === 'runJob') {
 			return renderOcrRunJobExecute.call(this, items);
+		}
+		if (resource === 'structFlow' && operation === 'runJob') {
+			return structFlowRunJobExecute.call(this, items);
 		}
 
 		throw new NodeOperationError(
