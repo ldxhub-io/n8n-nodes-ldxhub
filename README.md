@@ -22,6 +22,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 - [Polling Settings](#polling-settings)
 - [Troubleshooting](#troubleshooting)
 - [Support](#support)
+- [Changelog](#changelog)
 - [License](#license)
 
 ## Features
@@ -164,6 +165,10 @@ Defaults give 30 minutes. For longer documents, increase Max Polling Attempts
 - **Product**: https://ldxlab.io/ldxhub
 - **Documentation**: https://gw.portal.ldxhub.io/introduction
 - **Bug reports & feature requests**: [GitHub Issues](https://github.com/ldxhub-io/n8n-nodes-ldxhub/issues)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the full version history.
 
 ## License
 
