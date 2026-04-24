@@ -1,5 +1,13 @@
 # Changelog
 
+<!--
+  This CHANGELOG is maintained manually in Keep a Changelog format.
+  Do NOT regenerate with auto-changelog.
+  Release workflow uses `release-it` directly (see .release-it.json),
+  which bumps version, commits, tags, pushes, and creates a GitHub
+  release — without touching this file.
+-->
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),

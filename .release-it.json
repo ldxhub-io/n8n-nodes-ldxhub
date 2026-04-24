@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "before:init": ["npm run lint", "npm run build"]
+  },
+  "git": {
+    "requireBranch": "main",
+    "requireCleanWorkingDir": true,
+    "requireUpstream": true,
+    "requireCommits": true,
+    "commit": true,
+    "tag": true,
+    "push": true,
+    "commitMessage": "Release ${version}",
+    "tagName": "${version}"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release ${version}"
+  },
+  "npm": {
+    "publish": false
+  }
+}
