@@ -11,7 +11,7 @@ export class LdxHubApi implements ICredentialType {
 
 	displayName = 'LDXhub API';
 
-	icon: Icon = { light: 'file:../icons/ldxhub.svg', dark: 'file:../icons/ldxhub.dark.svg' };
+	icon: Icon = 'file:ldxhub.svg';
 
 	documentationUrl = 'https://gw.portal.ldxhub.io/introduction';
 
