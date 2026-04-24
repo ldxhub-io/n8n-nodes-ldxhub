@@ -25,6 +25,15 @@ export class LdxHubApi implements ICredentialType {
 			required: true,
 			description: 'Issued from the LDXhub console',
 		},
+		{
+			displayName: 'Base URL',
+			name: 'baseUrl',
+			type: 'string',
+			default: 'https://gw.ldxhub.io',
+			placeholder: 'https://gw.ldxhub.io',
+			description:
+				'LDX hub API base URL. Use the production URL for normal use. For development/testing, use the dev environment URL. Trailing slashes are trimmed automatically.',
+		},
 	];
 
 	authenticate: IAuthenticateGeneric = {
@@ -38,7 +47,7 @@ export class LdxHubApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://gw.ldxhub.io',
+			baseURL: '={{$credentials.baseUrl}}',
 			url: '/refineloop/models',
 			method: 'GET',
 		},

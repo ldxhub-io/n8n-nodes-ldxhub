@@ -1,7 +1,7 @@
 import type { IExecuteFunctions, IHttpRequestOptions } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 
-import { LDX_HUB_BASE_URL } from './transport';
+import { getBaseUrl } from './transport';
 
 export type UploadResponse = {
 	file_id: string;
@@ -27,9 +27,10 @@ export async function uploadFile(
 	const formData = new FormData();
 	formData.append('file', new Blob([buffer], { type: mimeType }), filename);
 
+	const baseUrl = await getBaseUrl.call(this);
 	const options: IHttpRequestOptions = {
 		method: 'POST',
-		url: `${LDX_HUB_BASE_URL}/files`,
+		url: `${baseUrl}/files`,
 		body: formData,
 	};
 
@@ -44,9 +45,10 @@ export async function downloadFile(
 	this: IExecuteFunctions,
 	fileId: string,
 ): Promise<DownloadResult> {
+	const baseUrl = await getBaseUrl.call(this);
 	const options: IHttpRequestOptions = {
 		method: 'GET',
-		url: `${LDX_HUB_BASE_URL}/files/${encodeURIComponent(fileId)}/content`,
+		url: `${baseUrl}/files/${encodeURIComponent(fileId)}/content`,
 		encoding: 'arraybuffer',
 		returnFullResponse: true,
 	};

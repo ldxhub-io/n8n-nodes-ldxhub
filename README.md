@@ -23,6 +23,7 @@ In your n8n instance:
 
 - An [LDX hub](https://ldxlab.io/ldxhub) account and API key — [sign up here](https://gw.portal.ldxhub.io/signup)
 - n8n version supporting community nodes (v1.x+)
+- **Base URL** (credential field): defaults to `https://gw.ldxhub.io` (production). Most users should leave this as-is; only change it when pointing to a development or staging environment.
 
 ## Usage
 

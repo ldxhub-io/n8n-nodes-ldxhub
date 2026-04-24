@@ -32,7 +32,7 @@ export class LdxHub implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'https://gw.ldxhub.io',
+			baseURL: '={{$credentials.baseUrl || "https://gw.ldxhub.io"}}',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
