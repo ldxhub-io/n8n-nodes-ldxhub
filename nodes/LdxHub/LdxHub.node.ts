@@ -6,10 +6,14 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
+import { getCastDocEngines } from './methods/loadOptions/getCastDocEngines';
+import { getCastDocOutputFormats } from './methods/loadOptions/getCastDocOutputFormats';
 import { getModels } from './methods/loadOptions/getModels';
 import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
 import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
 import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOutputFormats';
+import { castDocDescription } from './resources/castDoc';
+import { runJobExecute as castDocRunJobExecute } from './resources/castDoc/runJob.execute';
 import { refineLoopDescription } from './resources/refineLoop';
 import { runJobExecute as refineLoopRunJobExecute } from './resources/refineLoop/runJob.execute';
 import { renderOcrDescription } from './resources/renderOcr';
@@ -51,6 +55,10 @@ export class LdxHub implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'CastDoc',
+						value: 'castDoc',
+					},
+					{
 						name: 'RefineLoop',
 						value: 'refineLoop',
 					},
@@ -61,6 +69,7 @@ export class LdxHub implements INodeType {
 				],
 				default: 'refineLoop',
 			},
+			...castDocDescription,
 			...refineLoopDescription,
 			...renderOcrDescription,
 		],
@@ -68,6 +77,8 @@ export class LdxHub implements INodeType {
 
 	methods = {
 		loadOptions: {
+			getCastDocEngines,
+			getCastDocOutputFormats,
 			getModels,
 			getRenderOcrEngines,
 			getRenderOcrLanguages,
@@ -80,6 +91,9 @@ export class LdxHub implements INodeType {
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
 
+		if (resource === 'castDoc' && operation === 'runJob') {
+			return castDocRunJobExecute.call(this, items);
+		}
 		if (resource === 'refineLoop' && operation === 'runJob') {
 			return refineLoopRunJobExecute.call(this, items);
 		}
