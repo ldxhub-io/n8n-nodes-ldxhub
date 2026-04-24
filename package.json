@@ -59,6 +59,10 @@
 	"engines": {
 		"node": ">=20.15"
 	},
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
 	}
