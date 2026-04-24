@@ -1,7 +1,7 @@
 {
 	"name": "n8n-nodes-ldxhub",
 	"version": "0.5.0",
-	"description": "n8n community node for LDX hub — AI-powered XLIFF translation refinement (RefineLoop)",
+	"description": "n8n community node for LDX hub — AI-powered document processing platform with structured data extraction (StructFlow), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and XLIFF translation refinement (RefineLoop)",
 	"license": "MIT",
 	"homepage": "https://ldxlab.io/ldxhub",
 	"bugs": {
@@ -12,12 +12,28 @@
 		"n8n",
 		"ldxhub",
 		"ldx-hub",
+		"ai",
+		"llm",
+		"document-processing",
+		"structflow",
+		"structured-extraction",
+		"data-extraction",
+		"json-extraction",
 		"refineloop",
 		"translation",
 		"xliff",
 		"xlf",
 		"localization",
-		"ai-translation"
+		"ai-translation",
+		"renderocr",
+		"ocr",
+		"pdf-to-docx",
+		"pdf-conversion",
+		"castdoc",
+		"document-conversion",
+		"gemini",
+		"claude",
+		"gpt"
 	],
 	"author": {
 		"name": "ldxhub-io",

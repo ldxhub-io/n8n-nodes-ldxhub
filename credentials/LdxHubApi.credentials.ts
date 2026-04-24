@@ -22,8 +22,7 @@ export class LdxHubApi implements ICredentialType {
 			type: 'string',
 			default: 'https://gw.ldxhub.io',
 			placeholder: 'https://gw.ldxhub.io',
-			description:
-				'LDX hub API base URL. Use the production URL for normal use. For development/testing, use the dev environment URL. Trailing slashes are trimmed automatically.',
+			description: 'LDX hub API base URL (e.g., https://gw.ldxhub.io)',
 		},
 		{
 			displayName: 'API Key',
@@ -32,7 +31,7 @@ export class LdxHubApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-			description: 'Issued from the LDXhub console',
+			description: 'API key from the LDX hub console (Settings > API Keys)',
 		},
 	];
 
