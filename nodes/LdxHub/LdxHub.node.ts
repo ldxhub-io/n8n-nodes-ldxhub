@@ -43,13 +43,6 @@ export class LdxHub implements INodeType {
 				required: true,
 			},
 		],
-		requestDefaults: {
-			baseURL: '={{$credentials.baseUrl || "https://gw.ldxhub.io"}}',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		},
 		properties: [
 			{
 				displayName: 'Resource',
