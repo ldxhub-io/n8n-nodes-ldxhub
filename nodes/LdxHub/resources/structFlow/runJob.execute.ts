@@ -1,5 +1,10 @@
-import type { IDataObject, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
+import type {
+	IDataObject,
+	IExecuteFunctions,
+	INodeExecutionData,
+	JsonObject,
+} from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 import { downloadFile, uploadFile } from '../../shared/files';
 import { pollJobUntilDone } from '../../shared/polling';
@@ -173,7 +178,7 @@ export async function runJobExecute(
 			}
 			const ctx = (error as { context?: { itemIndex?: number } }).context;
 			if (ctx) ctx.itemIndex = i;
-			throw error;
+			throw new NodeApiError(this.getNode(), error as JsonObject);
 		}
 	}
 

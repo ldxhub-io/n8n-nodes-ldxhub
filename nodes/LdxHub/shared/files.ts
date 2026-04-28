@@ -1,5 +1,5 @@
-import type { IExecuteFunctions, IHttpRequestOptions } from 'n8n-workflow';
-import { NodeOperationError } from 'n8n-workflow';
+import type { IExecuteFunctions, IHttpRequestOptions, JsonObject } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 import { getBaseUrl } from './transport';
 
@@ -68,7 +68,7 @@ export async function downloadFile(
 				'Output file not found. The file may have expired.',
 			);
 		}
-		throw error;
+		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 
 	const body = response.body as Buffer | ArrayBuffer;
