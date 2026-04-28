@@ -15,6 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-04-28
+
+### Fixed
+- HTTP errors now wrapped with `NodeApiError` across polling and
+  download helpers (5 files), preserving HTTP status, response body,
+  and request context in the n8n UI (n8n verified manual review)
+
+### Removed
+- Dead `requestDefaults` block from `LdxHub.node.ts`. The node is
+  programmatic (uses `execute()` with `httpRequestWithAuthentication`),
+  so the declarative routing system never engaged this config
+
 ## [0.6.0] - 2026-04-24
 
 ### Added
@@ -95,7 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.6.0...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.7.0...HEAD
+[0.7.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.4.1...0.5.0
 [0.4.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.4.0...0.4.1
