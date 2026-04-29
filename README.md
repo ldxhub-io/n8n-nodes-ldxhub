@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js >=20.15](https://img.shields.io/badge/Node.js-%3E%3D20.15-brightgreen.svg)](https://nodejs.org)
 
-n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), and text-based PDF conversion (CastDoc).
+n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and plain-text/JSONL extraction (ExtractDoc).
 
 ## Table of Contents
 
@@ -18,6 +18,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
   - [RefineLoop](#refineloop--xliff-translation-refinement)
   - [RenderOCR](#renderocr--pdfimage-to-office)
   - [CastDoc](#castdoc--text-based-pdf-to-office-no-ocr)
+  - [ExtractDoc](#extractdoc--plain-text-or-jsonl-extraction-no-ai-no-ocr)
 - [AI Agent Integration](#ai-agent-integration)
 - [Polling Settings](#polling-settings)
 - [Troubleshooting](#troubleshooting)
@@ -31,6 +32,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 - **RefineLoop**: Iteratively improve XLIFF translation quality using frontier AI models (Google Gemini, Anthropic Claude, OpenAI GPT, and more)
 - **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - **CastDoc**: Convert text-based PDFs to Word/Excel/PowerPoint without OCR (high-fidelity layout preservation for digital-born documents)
+- **ExtractDoc**: Extract plain text or JSONL from PDF/DOCX/XLSX/PPTX using the `ki/extract` engine (no AI, no OCR, free tier) — ideal as a preprocessing step before StructFlow
 - HTTP long-polling architecture — compatible with n8n Cloud execution model
 - Proven at scale: tested with 1.19M-character academic papers
 
@@ -105,6 +107,18 @@ If the credential test fails, verify:
 3. Choose an engine and output format (docx/xlsx/pptx)
 
 **Example**: [CastDoc workflow](examples/castdoc-demo.json)
+
+### ExtractDoc — plain text or JSONL extraction (no AI, no OCR)
+
+1. Resource: **ExtractDoc** → Operation: **Run Conversion Job**
+2. Provide a PDF / DOCX / XLSX / PPTX file via binary input
+3. Choose the `ki/extract` engine and output format (`text` or `jsonl`)
+
+- **Input**: Binary file (PDF / DOCX / XLSX / PPTX)
+- **Output**: Plain text (`.txt`) or JSONL (`.jsonl`)
+- **Use case**: Preprocessing step before StructFlow (the Accordion pattern); also useful as a standalone free text extractor
+- **Pricing**: Free tier (no AI, no OCR)
+- **Engine**: `ki/extract`
 
 ## AI Agent Integration
 
