@@ -8,6 +8,8 @@ import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
 import { getCastDocEngines } from './methods/loadOptions/getCastDocEngines';
 import { getCastDocOutputFormats } from './methods/loadOptions/getCastDocOutputFormats';
+import { getExtractDocEngines } from './methods/loadOptions/getExtractDocEngines';
+import { getExtractDocOutputFormats } from './methods/loadOptions/getExtractDocOutputFormats';
 import { getModels } from './methods/loadOptions/getModels';
 import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
 import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
@@ -15,6 +17,8 @@ import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOut
 import { getStructFlowModels } from './methods/loadOptions/getStructFlowModels';
 import { castDocDescription } from './resources/castDoc';
 import { runJobExecute as castDocRunJobExecute } from './resources/castDoc/runJob.execute';
+import { extractDocDescription } from './resources/extractDoc';
+import { runJobExecute as extractDocRunJobExecute } from './resources/extractDoc/runJob.execute';
 import { refineLoopDescription } from './resources/refineLoop';
 import { runJobExecute as refineLoopRunJobExecute } from './resources/refineLoop/runJob.execute';
 import { renderOcrDescription } from './resources/renderOcr';
@@ -55,6 +59,10 @@ export class LdxHub implements INodeType {
 						value: 'castDoc',
 					},
 					{
+						name: 'ExtractDoc',
+						value: 'extractDoc',
+					},
+					{
 						name: 'RefineLoop',
 						value: 'refineLoop',
 					},
@@ -70,6 +78,7 @@ export class LdxHub implements INodeType {
 				default: 'refineLoop',
 			},
 			...castDocDescription,
+			...extractDocDescription,
 			...refineLoopDescription,
 			...renderOcrDescription,
 			...structFlowDescription,
@@ -80,6 +89,8 @@ export class LdxHub implements INodeType {
 		loadOptions: {
 			getCastDocEngines,
 			getCastDocOutputFormats,
+			getExtractDocEngines,
+			getExtractDocOutputFormats,
 			getModels,
 			getRenderOcrEngines,
 			getRenderOcrLanguages,
@@ -95,6 +106,9 @@ export class LdxHub implements INodeType {
 
 		if (resource === 'castDoc' && operation === 'runJob') {
 			return castDocRunJobExecute.call(this, items);
+		}
+		if (resource === 'extractDoc' && operation === 'runJob') {
+			return extractDocRunJobExecute.call(this, items);
 		}
 		if (resource === 'refineLoop' && operation === 'runJob') {
 			return refineLoopRunJobExecute.call(this, items);

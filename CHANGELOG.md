@@ -13,7 +13,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.7.0...HEAD)
+
+### Added
+
+* **ExtractDoc** resource: extract plain text or JSONL from PDF/DOCX/XLSX/PPTX
+  using the LDX hub `ki/extract` engine (no AI, no OCR, free tier). Useful as
+  a preprocessing step before StructFlow or as a standalone text extractor.
+* `getExtractDocEngines` and `getExtractDocOutputFormats` loadOptions
 
 ## [0.7.0] - 2026-04-28
 
