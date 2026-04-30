@@ -6,27 +6,11 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -304,
-        -320
+        -224,
+        224
       ],
-      "id": "154a16c2-eaf9-4197-ad83-23dc02f776eb",
+      "id": "55f638f6-47d4-43e3-bd33-d5923a4bf9f7",
       "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "fileSelector": "/path/to/your/input.jsonl",
-        "options": {
-          "dataPropertyName": "data"
-        }
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1.1,
-      "position": [
-        -80,
-        -320
-      ],
-      "id": "998bbc16-8f92-4e4c-bbe9-ca66dc262b83",
-      "name": "Read/Write Files from Disk"
     },
     {
       "parameters": {
@@ -86,10 +70,10 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        144,
-        -320
+        0,
+        224
       ],
-      "id": "5ecfee31-5e64-4e12-9880-be8aac5e27cd",
+      "id": "f2a3a4d0-9ed9-464a-a10c-85075f833398",
       "name": "Run a structflow job",
       "credentials": {
         "ldxHubApi": {
@@ -102,17 +86,6 @@
   "pinData": {},
   "connections": {
     "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Read/Write Files from Disk",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Read/Write Files from Disk": {
       "main": [
         [
           {

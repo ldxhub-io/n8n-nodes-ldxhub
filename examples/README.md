@@ -19,6 +19,7 @@ Sample n8n workflows demonstrating LDX hub integration.
 | `refineloop-demo.json` | RefineLoop | Refine an XLIFF translation file using Gemini |
 | `renderocr-demo.json` | RenderOCR | OCR a PDF and convert to DOCX (Japanese) |
 | `castdoc-demo.json` | CastDoc | Convert a text-based PDF to DOCX without OCR |
+| `extractdoc-demo.json` | ExtractDoc | Extract plain text or JSONL from a PDF/DOCX/XLSX/PPTX (no AI, no OCR) |
 
 ## Input File Formats
 
@@ -28,6 +29,7 @@ These examples reference placeholder paths like `/path/to/your/input.jsonl`. You
 - **XLIFF** (for RefineLoop): Standard `.xlf` file from a CAT tool (source-target bilingual file)
 - **PDF** (for RenderOCR): Any PDF (text-based or scanned image)
 - **PDF** (for CastDoc): Text-based (digital-born) PDF only — for scanned PDFs, use RenderOCR instead
+- **PDF / DOCX / XLSX / PPTX** (for ExtractDoc): Any digital-born document — text is extracted as plain text or JSONL
 
 ## Demo Data Note
 

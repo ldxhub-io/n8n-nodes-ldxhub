@@ -1,20 +1,20 @@
 {
-  "name": "RefineLoop Demo",
+  "name": "ExtractDoc Demo",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -208,
-        -96
+        0,
+        0
       ],
-      "id": "ae6dffe5-6a5a-41e8-98ec-8ff62040736d",
+      "id": "8db408e8-8884-45bd-aac4-ad53a38a309b",
       "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
-        "fileSelector": "/path/to/your/translation.xlf",
+        "fileSelector": "/path/to/your/document.pdf",
         "options": {
           "dataPropertyName": "data"
         }
@@ -22,26 +22,30 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        16,
-        -96
+        224,
+        0
       ],
-      "id": "1248ee2f-8ea8-497a-b0ad-f0dbf301bd3e",
+      "id": "2190b68e-b31c-43fc-8c10-f18b6d0a6fd8",
       "name": "Read/Write Files from Disk"
     },
     {
       "parameters": {
-        "model": "google/gemini-3-flash-preview",
-        "options": {},
-        "pollingSettings": {}
+        "resource": "extractDoc",
+        "engine": "ki/extract",
+        "output_format": "jsonl",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
       },
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        240,
-        -96
+        448,
+        0
       ],
-      "id": "6c618f49-6e61-418b-a1ba-0af68a5afa47",
-      "name": "Run a refinement job",
+      "id": "7543d2a9-4417-422c-8a28-7838848025f9",
+      "name": "Run a extractdoc job",
       "credentials": {
         "ldxHubApi": {
           "id": "",
@@ -67,7 +71,7 @@
       "main": [
         [
           {
-            "node": "Run a refinement job",
+            "node": "Run a extractdoc job",
             "type": "main",
             "index": 0
           }
