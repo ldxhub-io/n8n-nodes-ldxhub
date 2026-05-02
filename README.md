@@ -5,6 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js >=20.15](https://img.shields.io/badge/Node.js-%3E%3D20.15-brightgreen.svg)](https://nodejs.org)
 
+> ✅ **Free to try** — 25,000 credits/month, no credit card required  
+> ✅ **One key for everything** — OpenAI, Anthropic, Google, AWS, Azure, xAI  
+> ✅ **30-second sign-up** — GitHub, Google, or email; your API key is shown immediately
+
 n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and plain-text/JSONL extraction (ExtractDoc).
 
 ## Table of Contents
@@ -33,6 +37,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 - **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - **CastDoc**: Convert text-based PDFs to Word/Excel/PowerPoint without OCR (high-fidelity layout preservation for digital-born documents)
 - **ExtractDoc**: Extract plain text or JSONL from PDF/DOCX/XLSX/PPTX using the `ki/extract` engine (no AI, no OCR, free tier) — ideal as a preprocessing step before StructFlow
+- **One credential for all AI providers**: OpenAI, Anthropic Claude, Google Gemini, AWS Nova, Azure OpenAI, xAI Grok — accessed through a single LDX hub API key
 - HTTP long-polling architecture — compatible with n8n Cloud execution model
 - Proven at scale: tested with 1.19M-character academic papers
 
@@ -52,7 +57,7 @@ In your n8n instance:
 
 ## Credentials Setup
 
-1. Sign up or log in at the [LDX hub DevPortal](https://gw.portal.ldxhub.io)
+1. Sign up at the [LDX hub DevPortal](https://gw.portal.ldxhub.io) — **free, no credit card**. Use GitHub, Google, or email; your API key is shown immediately after sign-up.
 2. Choose a subscription plan — start with **Free** (25,000 credits/month) to evaluate, or pick **Starter** / **Standard** / **Pro** for production. See [pricing](https://gw.portal.ldxhub.io/pricing) for details.
 3. Click your account email in the top-right of the DevPortal, then select **My Subscriptions**
 4. Under **API Keys**, copy the **Current Key**

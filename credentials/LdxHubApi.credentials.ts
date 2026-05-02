@@ -31,7 +31,7 @@ export class LdxHubApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-			description: 'API key from the LDX hub console (Settings > API Keys)',
+			description: 'Get a free API key from https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).',
 		},
 	];
 
