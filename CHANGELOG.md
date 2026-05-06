@@ -13,9 +13,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...HEAD)
 
-## [0.8.1] - 2026-04-30
+## [0.8.2] - 2026-05-07
+
+### Changed
+
+- README: simplified ExtractDoc usage section to match other resources (removed redundant Use case/Pricing/Engine bullets, added Example link)
+- examples/refineloop-demo.json: explicit `pollingSettings` (180/10) for consistency with other demo workflows
+
+## [0.8.1] - 2026-05-02
 
 ### Changed
 
@@ -127,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...HEAD
+[0.8.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.6.0...0.7.0
