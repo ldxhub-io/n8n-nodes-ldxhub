@@ -119,11 +119,7 @@ If the credential test fails, verify:
 2. Provide a PDF / DOCX / XLSX / PPTX file via binary input
 3. Choose the `ki/extract` engine and output format (`text` or `jsonl`)
 
-- **Input**: Binary file (PDF / DOCX / XLSX / PPTX)
-- **Output**: Plain text (`.txt`) or JSONL (`.jsonl`)
-- **Use case**: Preprocessing step before StructFlow (the Accordion pattern); also useful as a standalone free text extractor
-- **Pricing**: Free tier (no AI, no OCR)
-- **Engine**: `ki/extract`
+**Example**: [ExtractDoc workflow](examples/extractdoc-demo.json)
 
 ## AI Agent Integration
 

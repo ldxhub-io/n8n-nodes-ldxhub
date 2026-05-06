@@ -32,7 +32,10 @@
       "parameters": {
         "model": "google/gemini-3-flash-preview",
         "options": {},
-        "pollingSettings": {}
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
       },
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
