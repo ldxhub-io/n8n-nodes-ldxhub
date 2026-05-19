@@ -13,7 +13,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...HEAD)
+
+## [0.8.3] - 2026-05-08
+
+### Changed
+
+- CI: migrated to npm Trusted Publishing (OIDC). No more long-lived `NPM_TOKEN` secret. Mitigates supply chain attack vectors (Mini Shai-Hulud pattern)
 
 ## [0.8.2] - 2026-05-07
 
@@ -134,7 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...HEAD
+[0.8.3]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...0.8.3
 [0.8.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.7.0...0.8.0
