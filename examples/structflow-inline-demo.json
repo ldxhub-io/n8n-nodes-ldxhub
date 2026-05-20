@@ -15,7 +15,7 @@
     {
       "parameters": {
         "resource": "structFlow",
-        "model": "google/gemini-3-flash-preview",
+        "model": "google/gemini-3.5-flash",
         "system_prompt": "提供された医師の診察メモ（note）を分析し、以下のJSON構造を出力してください。\nsymptoms: 患者の訴えや確認された症状を文字列の配列として抽出。\ndiagnosis: 確定診断名、または最も疑わしい病名を抽出（1つの文字列）。\ntreatment: 実施された処置、指示、または処方された薬剤名を文字列の配列として抽出。",
         "example_output": "{\"symptoms\":[\"発熱\",\"咽頭痛\",\"嚥下困難\"], \"diagnosis\":\"急性化膿性扁桃炎（溶連菌感染症）\", \"treatment\":[\"アモキシシリンカプセル処方\",\"ロキソプロフェンナトリウム処方\",\"安静と水分補給の指示\"]}",
         "inputs": {
