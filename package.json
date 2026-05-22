@@ -59,7 +59,8 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/LdxHubApi.credentials.js"
+			"dist/credentials/LdxHubApi.credentials.js",
+			"dist/credentials/LdxHubDynamicApi.credentials.js"
 		],
 		"nodes": [
 			"dist/nodes/LdxHub/LdxHub.node.js"

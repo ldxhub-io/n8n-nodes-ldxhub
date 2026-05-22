@@ -15,6 +15,7 @@ Sample n8n workflows demonstrating LDX hub integration.
 | File | Resource | Description |
 |---|---|---|
 | `structflow-inline-demo.json` | StructFlow | Extract structured data from 10 medical notes (Japanese) using inline inputs |
+| `structflow-dynamic-inline-demo.json` | StructFlow | Same as inline demo, but uses LDXhub Dynamic API credentials with a Form Trigger to supply the API key per execution |
 | `structflow-binary-demo.json` | StructFlow | Extract structured data from a JSONL file (Japanese medical notes) |
 | `refineloop-demo.json` | RefineLoop | Refine an XLIFF translation file using Gemini |
 | `renderocr-demo.json` | RenderOCR | OCR a PDF and convert to DOCX (Japanese) |

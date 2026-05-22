@@ -71,6 +71,18 @@ If the credential test fails, verify:
 - The Base URL has no trailing slash
 - Your network allows outbound HTTPS to `gw.ldxhub.io`
 
+### Dynamic Credentials (Advanced)
+
+For workflows where the API key should be provided dynamically per execution (e.g., from a Form Trigger, an upstream node, or an AI agent context), use the **LDXhub Dynamic API** credential variant:
+
+1. Create a new **LDXhub Dynamic API** credential
+2. Set **API Key** to an n8n expression that resolves at execution time, e.g., `{{ $json.api_key }}`
+3. In the LDXhub node, change **Authentication** from `API Key` to `API Key (Dynamic)` and select this credential
+
+The Model dropdown loads from LDX hub's public metadata endpoints without authentication, so the node UI works normally during workflow design.
+
+**Example**: [Dynamic credentials workflow](examples/structflow-dynamic-inline-demo.json)
+
 ## Usage
 
 > 💡 **Quick start**: Import ready-to-use example workflows from [`examples/`](examples/). Each example requires a **LDXhub API** credential and a placeholder input file path to be updated.
