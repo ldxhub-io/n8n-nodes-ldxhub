@@ -13,7 +13,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...HEAD)
+
+## [0.9.0] - 2026-05-22
+
+### Added
+
+- New `LdxHubDynamicApi` credential variant for per-execution API keys (Form Trigger, AI agent context, multi-tenant workflows)
+- Authentication selector on LDXhub node (`API Key` / `API Key (Dynamic)`)
+- `examples/structflow-dynamic-inline-demo.json`: StructFlow with Form Trigger + Dynamic credentials
+
+### Changed
+
+- Transport layer: bypass credential resolution for public metadata endpoints (`/{service}/models`, `/{service}/engines`) in dynamic mode, enabling Model/Engine dropdowns during workflow design
+- README: added Dynamic Credentials (Advanced) subsection under Credentials Setup
 
 ## [0.8.3] - 2026-05-08
 
@@ -140,7 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...HEAD
+[0.9.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...0.9.0
 [0.8.3]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...0.8.3
 [0.8.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.0...0.8.1
