@@ -1,11 +1,11 @@
 import type {
 	IAuthenticateGeneric,
 	Icon,
-	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
 
+// eslint-disable-next-line @n8n/community-nodes/credential-test-required
 export class LdxHubApi implements ICredentialType {
 	name = 'ldxHubApi';
 
@@ -31,7 +31,7 @@ export class LdxHubApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-			description: 'Get a free API key from https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).',
+			description: 'Your LDX hub API key. Supports expressions for per-execution keys (e.g., {{ $json.api_key }}). Get a free key at https://gw.portal.ldxhub.io.',
 		},
 	];
 
@@ -41,14 +41,6 @@ export class LdxHubApi implements ICredentialType {
 			headers: {
 				Authorization: '=Bearer {{$credentials?.apiKey}}',
 			},
-		},
-	};
-
-	test: ICredentialTestRequest = {
-		request: {
-			baseURL: '={{$credentials.baseUrl}}',
-			url: '/refineloop/models',
-			method: 'GET',
 		},
 	};
 }

@@ -13,7 +13,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...HEAD)
+
+## [0.9.1] - 2026-05-23
+
+### Fixed
+
+- Authentication selector defined in 0.9.0 was not visible in the n8n UI because `credentials.displayOptions.show` referencing a property name causes n8n to internalize that property as a credential-selector control instead of a regular parameter. The entire Dynamic-vs-Static split is now removed in favor of a single credential.
+
+### Changed
+
+- Consolidated `LdxHubApi` and `LdxHubDynamicApi` into a single `LdxHubApi` credential. The API Key field accepts both static values and n8n expressions (e.g., `{{ $json.api_key }}`) for per-execution keys. Existing `LdxHubApi` credentials keep working without modification.
+- Removed the credential connection test on save so expressions in the API Key field can be evaluated lazily at execution time.
+- Simplified transport layer: removed `getAuthenticationMode` and `getCredentialNameForMode` helpers. Public metadata endpoints (`/{service}/models`, `/{service}/engines`) are always called without authentication regardless of how the credential is configured.
+- README and `examples/README.md`: rewrote the Dynamic credentials documentation to reflect the single-credential approach. Added a "Dynamic API key" link in the StructFlow Examples row.
+
+### Removed
+
+- `LdxHubDynamicApi` credential type (functionally replaced by setting an Expression on the `LdxHubApi` credential's API Key field). 0.9.0 published this type but the Authentication selector that activated it was not rendered, so in practice no production workflows depend on it.
+- `Authentication` parameter on the LDXhub node (no longer needed with a single credential type).
 
 ## [0.9.0] - 2026-05-22
 
@@ -153,7 +171,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...HEAD
+[0.9.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...0.9.0
 [0.8.3]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...0.8.3
 [0.8.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.1...0.8.2

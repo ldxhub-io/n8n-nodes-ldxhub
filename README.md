@@ -64,22 +64,23 @@ In your n8n instance:
 5. In n8n, create a new **LDXhub API** credential:
    - **Base URL**: `https://gw.ldxhub.io` (default; leave as-is for production)
    - **API Key**: paste the key from step 4
-6. Click **Save** — n8n will automatically test the credential by listing available models
+6. Click **Save**
 
-If the credential test fails, verify:
+If API calls fail with 401 Unauthorized, verify:
 - The API key is active (shown with a green dot in the DevPortal)
 - The Base URL has no trailing slash
 - Your network allows outbound HTTPS to `gw.ldxhub.io`
 
-### Dynamic Credentials (Advanced)
+### Dynamic API Key (Advanced)
 
-For workflows where the API key should be provided dynamically per execution (e.g., from a Form Trigger, an upstream node, or an AI agent context), use the **LDXhub Dynamic API** credential variant:
+For workflows where the API key should be provided dynamically per execution (e.g., from a Form Trigger, an upstream node, or an AI agent context), set the **API Key** field of your LDXhub API credential to an n8n expression instead of a static value:
 
-1. Create a new **LDXhub Dynamic API** credential
-2. Set **API Key** to an n8n expression that resolves at execution time, e.g., `{{ $json.api_key }}`
-3. In the LDXhub node, change **Authentication** from `API Key` to `API Key (Dynamic)` and select this credential
+1. Create a new **LDXhub API** credential
+2. Switch the **API Key** field to **Expression** mode
+3. Enter an expression that resolves at execution time, e.g., `{{ $json.api_key }}`
+4. Save the credential
 
-The Model dropdown loads from LDX hub's public metadata endpoints without authentication, so the node UI works normally during workflow design.
+The Model and Engine dropdowns load from LDX hub's public metadata endpoints without authentication, so the node UI works normally during workflow design even when the API Key is an unresolved expression.
 
 **Example**: [Dynamic credentials workflow](examples/structflow-dynamic-inline-demo.json)
 
@@ -99,7 +100,7 @@ The Model dropdown loads from LDX hub's public metadata endpoints without authen
    - **Inline Inputs**: Provide ID + Data pairs directly in the workflow (good for small batches, quick prototyping)
    - **Binary File**: Provide a JSONL file as binary input (good for large batches, or as part of an ExtractDoc → StructFlow pipeline)
 
-**Examples**: [Inline mode](examples/structflow-inline-demo.json) · [Binary mode](examples/structflow-binary-demo.json)
+**Examples**: [Inline mode](examples/structflow-inline-demo.json) · [Binary mode](examples/structflow-binary-demo.json) · [Dynamic API key](examples/structflow-dynamic-inline-demo.json)
 
 ### RefineLoop — XLIFF translation refinement
 

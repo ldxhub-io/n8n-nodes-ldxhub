@@ -29,7 +29,6 @@
     },
     {
       "parameters": {
-        "authentication": "apiKeyDynamic",
         "resource": "structFlow",
         "model": "google/gemini-3.5-flash",
         "system_prompt": "提供された医師の診察メモ（note）を分析し、以下のJSON構造を出力してください。\nsymptoms: 患者の訴えや確認された症状を文字列の配列として抽出。\ndiagnosis: 確定診断名、または最も疑わしい病名を抽出（1つの文字列）。\ntreatment: 実施された処置、指示、または処方された薬剤名を文字列の配列として抽出。",
@@ -92,9 +91,9 @@
       "id": "6db21a43-1292-4c52-bfec-72a918463132",
       "name": "Run an extraction job",
       "credentials": {
-        "ldxHubDynamicApi": {
+        "ldxHubApi": {
           "id": "",
-          "name": "LDXhub API (Dynamic)"
+          "name": "LDXhub API"
         }
       }
     }

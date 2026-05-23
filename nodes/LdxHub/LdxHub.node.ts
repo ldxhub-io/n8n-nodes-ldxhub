@@ -45,40 +45,9 @@ export class LdxHub implements INodeType {
 			{
 				name: 'ldxHubApi',
 				required: true,
-				displayOptions: {
-					show: {
-						authentication: ['apiKey'],
-					},
-				},
-			},
-			{
-				name: 'ldxHubDynamicApi',
-				required: true,
-				displayOptions: {
-					show: {
-						authentication: ['apiKeyDynamic'],
-					},
-				},
 			},
 		],
 		properties: [
-			{
-				displayName: 'Authentication',
-				name: 'authentication',
-				type: 'options',
-				options: [
-					{
-						name: 'API Key',
-						value: 'apiKey',
-					},
-					{
-						name: 'API Key (Dynamic)',
-						value: 'apiKeyDynamic',
-					},
-				],
-				default: 'apiKey',
-				description: 'How to authenticate. Use "Dynamic" for per-execution API keys via expressions (e.g., form input).',
-			},
 			{
 				displayName: 'Resource',
 				name: 'resource',
