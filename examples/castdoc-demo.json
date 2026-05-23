@@ -31,6 +31,7 @@
     {
       "parameters": {
         "resource": "castDoc",
+        "binaryPropertyName": "data",
         "engine": "ki/cast",
         "output_format": "docx",
         "pollingSettings": {
@@ -84,9 +85,6 @@
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
-  },
-  "meta": {
-    "templateCredsSetupCompleted": true
   },
   "tags": []
 }

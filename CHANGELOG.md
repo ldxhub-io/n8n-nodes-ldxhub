@@ -13,7 +13,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.2...HEAD)
+
+## [0.9.2] - 2026-05-23
+
+### Added
+- New integrated example: `examples/all-services-demo.json` — try all 5 services from a single Form Trigger with API key consumed per execution
+- README: dedicated "Quick Start" section featuring the integrated demo
+
+### Changed
+- All example workflows now explicitly set `resource` and `binaryPropertyName` parameters (future-proof against future LDX hub Node default changes)
+- examples/README.md restructured: "Quick Start" (all-services) separated from "Individual Service Demos"
+- README.md: Quick start hint in Usage section renamed to "Examples" to avoid conflict with the new Quick Start section
+
+### Removed
+- `meta.templateCredsSetupCompleted` flag from all example workflows (misleading for marketplace import)
 
 ## [0.9.1] - 2026-05-23
 
@@ -171,7 +185,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.2...HEAD
+[0.9.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...0.9.2
 [0.9.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...0.9.0
 [0.8.3]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.2...0.8.3

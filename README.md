@@ -14,6 +14,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 ## Table of Contents
 
 - [Features](#features)
+- [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Prerequisites](#prerequisites)
 - [Credentials Setup](#credentials-setup)
@@ -29,6 +30,22 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 - [Support](#support)
 - [Changelog](#changelog)
 - [License](#license)
+
+## Quick Start
+
+After [installation](#installation):
+
+1. Get a free API key at [gw.portal.ldxhub.io](https://gw.portal.ldxhub.io) (no credit card)
+2. Import [`all-services-demo.json`](examples/all-services-demo.json)
+3. Create an **LDXhub API** credential with both fields set to expressions:
+   - **Base URL**: `={{ $('On form submission').item.json.host }}`
+   - **API Key**: `={{ $('On form submission').item.json.api_key }}`
+4. Select this credential in each LDXhub node
+5. Run the workflow — enter your API key (and optionally a custom host) in the form
+
+All 5 services (StructFlow / RefineLoop / RenderOCR / CastDoc / ExtractDoc) accessible from a single Form Trigger. **The API key is consumed per execution, never stored in n8n.**
+
+For traditional single-service usage with a static credential, see [Usage](#usage) below.
 
 ## Features
 
@@ -86,7 +103,7 @@ The Model and Engine dropdowns load from LDX hub's public metadata endpoints wit
 
 ## Usage
 
-> 💡 **Quick start**: Import ready-to-use example workflows from [`examples/`](examples/). Each example requires a **LDXhub API** credential and a placeholder input file path to be updated.
+> 💡 **Examples**: All ready-to-use workflows are in [`examples/`](examples/). Each individual demo requires a **LDXhub API** credential and a placeholder input file path to be updated.
 
 1. Add **LDXhub API** credentials (see [Credentials Setup](#credentials-setup))
 2. Add the **LDXhub** node to your workflow

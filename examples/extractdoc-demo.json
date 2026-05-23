@@ -31,6 +31,7 @@
     {
       "parameters": {
         "resource": "extractDoc",
+        "binaryPropertyName": "data",
         "engine": "ki/extract",
         "output_format": "jsonl",
         "pollingSettings": {
@@ -84,9 +85,6 @@
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
-  },
-  "meta": {
-    "templateCredsSetupCompleted": true
   },
   "tags": []
 }

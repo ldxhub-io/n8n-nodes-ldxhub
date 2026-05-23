@@ -30,6 +30,8 @@
     },
     {
       "parameters": {
+        "resource": "refineLoop",
+        "binaryPropertyName": "data",
         "model": "google/gemini-3.5-flash",
         "options": {},
         "pollingSettings": {
@@ -83,9 +85,6 @@
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
-  },
-  "meta": {
-    "templateCredsSetupCompleted": true
   },
   "tags": []
 }

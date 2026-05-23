@@ -2,15 +2,11 @@
 
 Sample n8n workflows demonstrating LDX hub integration.
 
-## Import Instructions
+## Quick Start
 
-1. In n8n, go to **Workflows** → **Import from File**
-2. Select one of the `.json` files in this directory
-3. After import:
-   - Click the **LDXhub** node and select your **LDXhub API** credential (create one first if you haven't — see the main [Credentials Setup](../README.md#credentials-setup))
-   - Click the **Read/Write Files from Disk** node and update the **File Path** to point to your local input file
+**[`all-services-demo.json`](all-services-demo.json)** — Try all 5 services (StructFlow / RefineLoop / RenderOCR / CastDoc / ExtractDoc) from a single Form Trigger. Your API key is entered per execution (one credential with expression-based fields required — see the [main README's Quick Start](../README.md#quick-start) for setup). **Best starting point.**
 
-## Examples
+## Individual Service Demos
 
 | File | Resource | Description |
 |---|---|---|
@@ -21,6 +17,14 @@ Sample n8n workflows demonstrating LDX hub integration.
 | `renderocr-demo.json` | RenderOCR | OCR a PDF and convert to DOCX (Japanese) |
 | `castdoc-demo.json` | CastDoc | Convert a text-based PDF to DOCX without OCR |
 | `extractdoc-demo.json` | ExtractDoc | Extract plain text or JSONL from a PDF/DOCX/XLSX/PPTX (no AI, no OCR) |
+
+## Import Instructions (individual demos)
+
+1. In n8n, go to **Workflows** → **Import from File**
+2. Select one of the `.json` files in this directory
+3. After import:
+   - Click the **LDXhub** node and select your **LDXhub API** credential (create one first if you haven't — see the main [Credentials Setup](../README.md#credentials-setup))
+   - Click the **Read/Write Files from Disk** node and update the **File Path** to point to your local input file
 
 ## Input File Formats
 

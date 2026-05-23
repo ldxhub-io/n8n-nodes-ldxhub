@@ -118,9 +118,5 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "meta": {
-    "templateCredsSetupCompleted": true
-  },
-  "id": "",
   "tags": []
 }

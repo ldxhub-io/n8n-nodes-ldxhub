@@ -1,0 +1,1560 @@
+{
+  "name": "LDX hub All Services Demo",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Try LDX hub — 5 services in one workflow",
+        "formDescription": "Pick from StructFlow, RefineLoop, RenderOCR, CastDoc, or ExtractDoc — and run a one-off job with your API key. The key is consumed only for this execution and is not stored in n8n credentials.\n\n🎁 Free tier: 25,000 credits/month, no credit card required.\nGet your API key at <a href=\"https://gw.portal.ldxhub.io\">https://gw.portal.ldxhub.io</a>",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "API Key",
+              "fieldName": "api_key",
+              "placeholder": "zpka_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx_xxxxxxxxx",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "API Host",
+              "fieldName": "host",
+              "placeholder": "https://gw.ldxhub.io",
+              "defaultValue": "https://gw.ldxhub.io",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Service",
+              "fieldType": "dropdown",
+              "fieldName": "service",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "StructFlow"
+                  },
+                  {
+                    "option": "RefineLoop"
+                  },
+                  {
+                    "option": "RenderOCR"
+                  },
+                  {
+                    "option": "CastDoc"
+                  },
+                  {
+                    "option": "ExtractDoc"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -2208,
+        160
+      ],
+      "id": "b202794e-cc96-4533-bdc1-9defae272be8",
+      "name": "On form submission",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "7d1311ea-5737-4a3b-9fde-3e743df04f44",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "structflow",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "structflow"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "d13c5b45-6d95-421f-bfc5-1411c57d5010",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "refineloop",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "refineloop"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "4e76f71b-2b1a-4802-b6f4-d61a1a754e4b",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "renderocr",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "renderocr"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "88492c3f-0d80-404d-8db6-4ba279ead37e",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "castdoc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "castdoc"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3e0df4e8-bc65-41de-a9f6-6626c9acd68b",
+                    "leftValue": "={{ $json.service }}",
+                    "rightValue": "extractdoc",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "extractdoc"
+            }
+          ]
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1984,
+        112
+      ],
+      "id": "7e5efd31-f480-4f09-b0e7-8690188e5699",
+      "name": "Route by Service"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('On form submission').item.json.host }}/extractdoc/engines",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1760,
+        928
+      ],
+      "id": "463eb164-1a2d-41ef-b1d0-74c5158e8a24",
+      "name": "ExtractDoc: Get Engines"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Engine\",\n    fieldName: \"engine\",\n    fieldType: \"dropdown\",\n    fieldOptions: {\n      values: $json.data.map(e => ({ option: e.id }))\n    },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "ExtractDoc — Step 1 of 3: Engine",
+          "formDescription": "Pick an extraction engine. The supported input formats and output formats depend on the selected engine.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1536,
+        928
+      ],
+      "id": "c98da180-919c-40e5-9d62-bb3f45c0de46",
+      "name": "ExtractDoc: Select Engine",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d109edc5-419a-4c57-8cd1-c2713a03651f",
+              "name": "to_options",
+              "value": "={{ $('ExtractDoc: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.to).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            },
+            {
+              "id": "9449df31-77eb-479b-83f2-54d43e7964f7",
+              "name": "from_options",
+              "value": "={{ $('ExtractDoc: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.from).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1312,
+        928
+      ],
+      "id": "912c9ea2-ac7b-4afb-bcb6-0815820f6020",
+      "name": "ExtractDoc: Derive Options"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Source File\",\n    fieldName: \"file\",\n    fieldType: \"file\",\n    acceptFileTypes: \".\" + $json.from_options.join(\",.\"),\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "ExtractDoc — Step 2 of 3: File",
+          "formDescription": "Upload your document. The available output formats will be filtered based on the file type in the next step.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1088,
+        928
+      ],
+      "id": "a1c312e9-285a-4b20-8f4a-031ef95c4e15",
+      "name": "ExtractDoc: Upload File",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4968c3c-88cc-4691-a667-469c16d09ce6",
+              "name": "to_options",
+              "value": "={{ (() => { const map = { jpg: 'jpeg', tif: 'tiff' }; const raw = ($binary.file.fileExtension || '').toLowerCase(); const from = map[raw] || raw; return $('ExtractDoc: Get Engines').item.json.data.find(e => e.id === $('ExtractDoc: Select Engine').item.json.engine).supported_conversions.filter(c => c.from === from).map(c => c.to).filter((v, i, a) => a.indexOf(v) === i); })() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        928
+      ],
+      "id": "df7e2e1d-17ad-4287-8081-4e83d007498e",
+      "name": "ExtractDoc: Filter by File"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Output Format\",\n    fieldName: \"output_format\",\n    fieldType: \"dropdown\",\n    fieldOptions: {\n      values: $json.to_options.map(t => ({ option: t }))\n    },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "ExtractDoc — Step 3 of 3: Output",
+          "formDescription": "Choose the output format. Options are filtered based on the file you just uploaded.",
+          "buttonLabel": "Run ExtractDoc"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        928
+      ],
+      "id": "c8220aae-b78f-4dbc-b4cc-96581f613027",
+      "name": "ExtractDoc: Select Output",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<h3>Something went wrong</h3>\n\n<p>Your ExtractDoc job could not be completed.</p>\n\n<p>This usually happens when:</p>\n<ul>\n  <li>Your API key is invalid or expired</li>\n  <li>You've exceeded your monthly credit limit</li>\n  <li>The file is corrupted or unsupported</li>\n</ul>\n\n<p>Please verify your API key at <a href=\"https://gw.portal.ldxhub.io\">gw.portal.ldxhub.io</a> and try again.</p>\n\n<p><small>Error details: {{ typeof $json.error === 'string' ? $json.error : ($json.error?.message || $json.message || 'No additional details available.') }}</small></p>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        1024
+      ],
+      "id": "23317263-a599-4862-8929-b74e64ccef95",
+      "name": "ExtractDoc: Error",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: item.json,\n  binary: $('ExtractDoc: Upload File').item.binary\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        928
+      ],
+      "id": "e576985e-ae6b-478e-8a47-9156186b64e9",
+      "name": "ExtractDoc: Inject Binary"
+    },
+    {
+      "parameters": {
+        "resource": "extractDoc",
+        "binaryPropertyName": "file",
+        "engine": "={{ $('ExtractDoc: Select Engine').item.json.engine }}",
+        "output_format": "={{ $('ExtractDoc: Select Output').item.json.output_format }}",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        928
+      ],
+      "id": "9a1140ed-08f0-448f-8271-f853ab23d714",
+      "name": "ExtractDoc: Run",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "ExtractDoc Complete",
+        "completionMessage": "Your converted file has been downloaded.\n\nWant to convert another file or try a different service?\nReload this page to start over.",
+        "inputDataFieldName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        832
+      ],
+      "id": "299edb27-3a53-4921-9898-7a4ab3215d9d",
+      "name": "ExtractDoc: Download",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d109edc5-419a-4c57-8cd1-c2713a03651f",
+              "name": "to_options",
+              "value": "={{ $('RenderOCR: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.to).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            },
+            {
+              "id": "9449df31-77eb-479b-83f2-54d43e7964f7",
+              "name": "from_options",
+              "value": "={{ $('RenderOCR: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.from).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            },
+            {
+              "id": "2b96b34e-ff3d-4589-96b5-f570a3018cd1",
+              "name": "language_options",
+              "value": "={{ (() => { const codes = $('RenderOCR: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_languages.map(l => l.code); return codes.includes('Auto') ? ['Auto', ...codes.filter(c => c !== 'Auto')] : codes; })() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1312,
+        160
+      ],
+      "id": "7cb13407-1ef8-4425-a789-f29d19f9eaf7",
+      "name": "RenderOCR: Derive Options"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('On form submission').item.json.host }}/renderocr/engines",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1760,
+        160
+      ],
+      "id": "c044ca22-81c9-4b52-a305-6d9486235455",
+      "name": "RenderOCR: Get Engines"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Engine\",\n    fieldName: \"engine\",\n    fieldType: \"dropdown\",\n    fieldOptions: {\n      values: $json.data.map(e => ({ option: e.id }))\n    },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "RenderOCR — Step 1 of 3: Engine",
+          "formDescription": "Pick an OCR engine. The supported input formats, output formats, and languages depend on the selected engine.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1536,
+        160
+      ],
+      "id": "9d6c4004-a4d0-40d2-9273-b8fc122d0073",
+      "name": "RenderOCR: Select Engine",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Source File\",\n    fieldName: \"file\",\n    fieldType: \"file\",\n    acceptFileTypes: \".\" + $json.from_options.join(\",.\"),\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "RenderOCR — Step 2 of 3: File",
+          "formDescription": "Upload your document. The available output formats will be filtered based on the file type in the next step.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1088,
+        160
+      ],
+      "id": "ed89e6e6-d7ad-4339-90ec-12ab20bbac6c",
+      "name": "RenderOCR: Upload File",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4968c3c-88cc-4691-a667-469c16d09ce6",
+              "name": "to_options",
+              "value": "={{ (() => { const map = { jpg: 'jpeg', tif: 'tiff' }; const raw = ($binary.file.fileExtension || '').toLowerCase(); const from = map[raw] || raw; return $('RenderOCR: Get Engines').item.json.data.find(e => e.id === $('RenderOCR: Select Engine').item.json.engine).supported_conversions.filter(c => c.from === from).map(c => c.to).filter((v, i, a) => a.indexOf(v) === i); })() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        160
+      ],
+      "id": "57f0430f-b257-49ca-bab8-9ea28f02f25a",
+      "name": "RenderOCR: Filter by File"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Output Format\",\n    fieldName: \"output_format\",\n    fieldType: \"dropdown\",\n    fieldOptions: { values: $json.to_options.map(t => ({ option: t })) },\n    requiredField: true\n  },\n  {\n    fieldLabel: \"Language\",\n    fieldName: \"language\",\n    fieldType: \"dropdown\",\n    fieldOptions: { values: $('RenderOCR: Derive Options').item.json.language_options.map(c => ({ option: c })) },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "RenderOCR — Step 3 of 3: Output",
+          "formDescription": "Choose the output format and language. Output formats depend on the file you uploaded; languages depend on the engine.",
+          "buttonLabel": "Run RenderOCR"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        160
+      ],
+      "id": "5c665d6b-7c8c-4e9c-b300-68c41b04481d",
+      "name": "RenderOCR: Select Output",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: item.json,\n  binary: $('RenderOCR: Upload File').item.binary\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        160
+      ],
+      "id": "43fe75c9-2014-4227-b3e7-96c966fb8186",
+      "name": "RenderOCR: Inject Binary"
+    },
+    {
+      "parameters": {
+        "resource": "renderOcr",
+        "binaryPropertyName": "file",
+        "engine": "={{ $('RenderOCR: Select Engine').item.json.engine }}",
+        "languages": "={{ [$('RenderOCR: Select Output').item.json.language] }}",
+        "output_format": "={{ $('RenderOCR: Select Output').item.json.output_format }}",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        160
+      ],
+      "id": "ceaa6712-49f6-4f48-8982-142c9bb50666",
+      "name": "RenderOCR: Run",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "RenderOCR Complete",
+        "completionMessage": "Your converted file has been downloaded.\n\nWant to convert another file or try a different service?\nReload this page to start over.",
+        "inputDataFieldName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        64
+      ],
+      "id": "db9992af-90a7-4f68-89b4-48f241f6d392",
+      "name": "RenderOCR: Download",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<h3>Something went wrong</h3>\n\n<p>Your RenderOCR job could not be completed.</p>\n\n<p>This usually happens when:</p>\n<ul>\n  <li>Your API key is invalid or expired</li>\n  <li>You've exceeded your monthly credit limit</li>\n  <li>The file is corrupted or unsupported</li>\n</ul>\n\n<p>Please verify your API key at <a href=\"https://gw.portal.ldxhub.io\">gw.portal.ldxhub.io</a> and try again.</p>\n\n<p><small>Error details: {{ typeof $json.error === 'string' ? $json.error : ($json.error?.message || $json.message || 'No additional details available.') }}</small></p>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        256
+      ],
+      "id": "f0da25e9-4911-40ed-afa2-323c1d50739f",
+      "name": "RenderOCR: Error",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "url": "={{ $('On form submission').item.json.host }}/castdoc/engines",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1760,
+        544
+      ],
+      "id": "182202a9-7c15-4f96-b57c-6017475c12e2",
+      "name": "CastDoc: Get Engines"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Engine\",\n    fieldName: \"engine\",\n    fieldType: \"dropdown\",\n    fieldOptions: {\n      values: $json.data.map(e => ({ option: e.id }))\n    },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "CastDoc — Step 1 of 3: Engine",
+          "formDescription": "Pick a conversion engine. The supported input formats and output formats depend on the selected engine.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1536,
+        544
+      ],
+      "id": "ab350ef7-ec4c-4a63-9cf3-51a167839006",
+      "name": "CastDoc: Select Engine",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d109edc5-419a-4c57-8cd1-c2713a03651f",
+              "name": "to_options",
+              "value": "={{ $('CastDoc: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.to).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            },
+            {
+              "id": "9449df31-77eb-479b-83f2-54d43e7964f7",
+              "name": "from_options",
+              "value": "={{ $('CastDoc: Get Engines').item.json.data.find(e => e.id === $json.engine).supported_conversions.map(c => c.from).filter((v, i, a) => a.indexOf(v) === i) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1312,
+        544
+      ],
+      "id": "f8381269-e519-4475-9722-63d263d3a59f",
+      "name": "CastDoc: Derive Options"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Source File\",\n    fieldName: \"file\",\n    fieldType: \"file\",\n    acceptFileTypes: \".\" + $json.from_options.join(\",.\"),\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "CastDoc — Step 2 of 3: File",
+          "formDescription": "Upload your document. The available output formats will be filtered based on the file type in the next step.",
+          "buttonLabel": "Continue"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1088,
+        544
+      ],
+      "id": "01d491f8-55ce-4899-a772-8b8f02a0a5ad",
+      "name": "CastDoc: Upload File",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4968c3c-88cc-4691-a667-469c16d09ce6",
+              "name": "to_options",
+              "value": "={{ (() => { const map = { jpg: 'jpeg', tif: 'tiff' }; const raw = ($binary.file.fileExtension || '').toLowerCase(); const from = map[raw] || raw; return $('CastDoc: Get Engines').item.json.data.find(e => e.id === $('CastDoc: Select Engine').item.json.engine).supported_conversions.filter(c => c.from === from).map(c => c.to).filter((v, i, a) => a.indexOf(v) === i); })() }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        544
+      ],
+      "id": "f1bdf991-4931-4b9d-8dd1-043c5ecae454",
+      "name": "CastDoc: Filter by File"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    fieldLabel: \"Output Format\",\n    fieldName: \"output_format\",\n    fieldType: \"dropdown\",\n    fieldOptions: {\n      values: $json.to_options.map(t => ({ option: t }))\n    },\n    requiredField: true\n  }\n] }}",
+        "options": {
+          "formTitle": "CastDoc — Step 3 of 3: Output",
+          "formDescription": "Choose the output format. Options are filtered based on the file you just uploaded.",
+          "buttonLabel": "Run CastDoc"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        544
+      ],
+      "id": "1663df39-742b-4129-806a-7250985425f2",
+      "name": "CastDoc: Select Output",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: item.json,\n  binary: $('CastDoc: Upload File').item.binary\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        544
+      ],
+      "id": "323880ad-4088-4c20-b5d1-33d56f8f811e",
+      "name": "CastDoc: Inject Binary"
+    },
+    {
+      "parameters": {
+        "resource": "castDoc",
+        "binaryPropertyName": "file",
+        "engine": "={{ $('CastDoc: Select Engine').item.json.engine }}",
+        "output_format": "={{ $('CastDoc: Select Output').item.json.output_format }}",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        544
+      ],
+      "id": "5d70f97f-8850-4c77-8dcb-bd6f803bc971",
+      "name": "CastDoc: Run",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "CastDoc Complete",
+        "completionMessage": "Your converted file has been downloaded.\n\nWant to convert another file or try a different service?\nReload this page to start over.",
+        "inputDataFieldName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        448
+      ],
+      "id": "f23c14db-4639-46ae-a190-9275f63595ad",
+      "name": "CastDoc: Download",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<h3>Something went wrong</h3>\n\n<p>Your CastDoc job could not be completed.</p>\n\n<p>This usually happens when:</p>\n<ul>\n  <li>Your API key is invalid or expired</li>\n  <li>You've exceeded your monthly credit limit</li>\n  <li>The file is corrupted or unsupported</li>\n</ul>\n\n<p>Please verify your API key at <a href=\"https://gw.portal.ldxhub.io\">gw.portal.ldxhub.io</a> and try again.</p>\n\n<p><small>Error details: {{ typeof $json.error === 'string' ? $json.error : ($json.error?.message || $json.message || 'No additional details available.') }}</small></p>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        32,
+        640
+      ],
+      "id": "44e7f4d4-73bd-4b60-a739-2c54ab95f884",
+      "name": "CastDoc: Error",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "url": "={{ $('On form submission').item.json.host }}/structflow/models",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1760,
+        -512
+      ],
+      "id": "aa752b4d-cd70-4b78-9810-68ce881fe42a",
+      "name": "StructFlow: Get Models"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d109edc5-419a-4c57-8cd1-c2713a03651f",
+              "name": "model_options",
+              "value": "={{ $('StructFlow: Get Models').item.json.data.map(m => m.id) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1536,
+        -512
+      ],
+      "id": "14c9744e-bbfb-4b64-9bf8-0f961b4989c7",
+      "name": "StructFlow: Derive Options"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    \"fieldLabel\": \"Model\",\n    \"fieldName\": \"model\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n      \"values\": $('StructFlow: Derive Options').item.json.model_options.map(m => ({ option: m }))\n    },\n    \"requiredField\": true\n  },\n  {\n    \"fieldLabel\": \"System Prompt\",\n    \"fieldName\": \"system_prompt\",\n    \"fieldType\": \"textarea\",\n    \"placeholder\": \"Extract title, date, parties, and main content.\",\n    \"requiredField\": true\n  },\n  {\n    \"fieldLabel\": \"Example Output (JSON)\",\n    \"fieldName\": \"example_output\",\n    \"fieldType\": \"textarea\",\n    \"placeholder\": \"{\\\"title\\\":\\\"\\\",\\\"date\\\":\\\"\\\",\\\"parties\\\":[],\\\"content\\\":\\\"\\\"}\",\n    \"requiredField\": true\n  },\n  {\n    \"fieldLabel\": \"JSONL File\",\n    \"fieldName\": \"file\",\n    \"fieldType\": \"file\",\n    \"acceptFileTypes\": \".jsonl\",\n    \"requiredField\": true\n  }\n] }}",
+        "options": {
+          "formTitle": "StructFlow — Configure & Run",
+          "formDescription": "Select a model, define your extraction task, and upload the source document.",
+          "buttonLabel": "Run StructFlow"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1312,
+        -512
+      ],
+      "id": "bb2639ff-8cf9-4a3d-8e85-6431aa079336",
+      "name": "StructFlow: Run Form",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: item.json,\n  binary: $('StructFlow: Run Form').item.binary\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        -512
+      ],
+      "id": "6b14298b-3df0-465b-8273-30438a757022",
+      "name": "StructFlow: Inject Binary"
+    },
+    {
+      "parameters": {
+        "resource": "structFlow",
+        "model": "={{ $('StructFlow: Run Form').item.json.model }}",
+        "system_prompt": "={{ $('StructFlow: Run Form').item.json.system_prompt }}",
+        "example_output": "={{ $('StructFlow: Run Form').item.json.example_output }}",
+        "inputMode": "binary",
+        "binaryPropertyName": "file",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        -512
+      ],
+      "id": "9f8d3730-d7e2-40c4-81d8-db7e7c8002ca",
+      "name": "StructFlow: Run",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "StructFlow Complete",
+        "completionMessage": "Your extracted data has been downloaded.\n\nWant to run another extraction or try a different service?\nReload this page to start over.",
+        "inputDataFieldName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        -608
+      ],
+      "id": "499500f0-ae1f-4c49-93f5-658856533153",
+      "name": "StructFlow: Download",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<h3>Something went wrong</h3>\n\n<p>Your StructFlow job could not be completed.</p>\n\n<p>This usually happens when:</p>\n<ul>\n  <li>Your API key is invalid or expired</li>\n  <li>You've exceeded your monthly credit limit</li>\n  <li>The file is corrupted or unsupported</li>\n</ul>\n\n<p>Please verify your API key at <a href=\"https://gw.portal.ldxhub.io\">gw.portal.ldxhub.io</a> and try again.</p>\n\n<p><small>Error details: {{ typeof $json.error === 'string' ? $json.error : ($json.error?.message || $json.message || 'No additional details available.') }}</small></p>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        -416
+      ],
+      "id": "1639e4f2-fb0e-4b06-bd92-15e63365b1cd",
+      "name": "StructFlow: Error",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "url": "={{ $('On form submission').item.json.host }}/refineloop/models",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -1760,
+        -128
+      ],
+      "id": "541d30fc-438e-411b-92cc-fd3964afeb01",
+      "name": "RefineLoop: Get Models"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d109edc5-419a-4c57-8cd1-c2713a03651f",
+              "name": "model_options",
+              "value": "={{ $('RefineLoop: Get Models').item.json.data.map(m => m.id) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1536,
+        -128
+      ],
+      "id": "d41146ce-4fb4-4d3c-ab0d-39b7bb2c160b",
+      "name": "RefineLoop: Derive Options"
+    },
+    {
+      "parameters": {
+        "defineForm": "json",
+        "jsonOutput": "={{ [\n  {\n    \"fieldLabel\": \"Model\",\n    \"fieldName\": \"model\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n      \"values\": $('RefineLoop: Derive Options').item.json.model_options.map(m => ({ option: m }))\n    },\n    \"requiredField\": true\n  },\n  {\n    \"fieldLabel\": \"Max Revisions\",\n    \"fieldName\": \"max_revisions\",\n    \"fieldType\": \"number\",\n    \"placeholder\": \"6 (default, 1-10)\",\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Domain\",\n    \"fieldName\": \"domain\",\n    \"fieldType\": \"text\",\n    \"placeholder\": \"e.g., medical, legal, IR\",\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Note Language\",\n    \"fieldName\": \"note_language\",\n    \"fieldType\": \"text\",\n    \"placeholder\": \"ja, en, ko (defaults to source lang)\",\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Custom Instructions\",\n    \"fieldName\": \"custom_instructions\",\n    \"fieldType\": \"textarea\",\n    \"placeholder\": \"Additional refinement instructions\",\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Exclude Numeric Segments\",\n    \"fieldName\": \"exclude_numeric_segments\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n      \"values\": [{ \"option\": \"false\" }, { \"option\": \"true\" }]\n    },\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Remove Hyphenation\",\n    \"fieldName\": \"remove_hyphenation\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n      \"values\": [{ \"option\": \"true\" }, { \"option\": \"false\" }]\n    },\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"Output Mode\",\n    \"fieldName\": \"output_mode\",\n    \"fieldType\": \"dropdown\",\n    \"fieldOptions\": {\n      \"values\": [{ \"option\": \"full\" }, { \"option\": \"translations\" }, { \"option\": \"none\" }]\n    },\n    \"requiredField\": false\n  },\n  {\n    \"fieldLabel\": \"XLIFF File\",\n    \"fieldName\": \"file\",\n    \"fieldType\": \"file\",\n    \"acceptFileTypes\": \".xlf,.xliff\",\n    \"requiredField\": true\n  }\n] }}",
+        "options": {
+          "formTitle": "RefineLoop — Configure & Run",
+          "formDescription": "Select a model and upload your XLIFF file. Optional parameters tune the refinement process — revisions, domain, output mode, and more.",
+          "buttonLabel": "Run RefineLoop"
+        }
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1312,
+        -128
+      ],
+      "id": "5dd092ce-f3cd-49db-87c3-6825682b6291",
+      "name": "RefineLoop: Run Form",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: item.json,\n  binary: $('RefineLoop: Run Form').item.binary\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        -128
+      ],
+      "id": "ec00cba0-1cbb-4716-9bbd-7f46feb9d61a",
+      "name": "RefineLoop: Inject Binary"
+    },
+    {
+      "parameters": {
+        "resource": "refineLoop",
+        "binaryPropertyName": "file",
+        "model": "={{ $('RefineLoop: Run Form').item.json.model }}",
+        "maxRevisions": "={{ Number($('RefineLoop: Run Form').item.json.max_revisions) || 6 }}",
+        "options": {
+          "customInstructions": "={{ $('RefineLoop: Run Form').item.json.custom_instructions || undefined }}",
+          "domain": "={{ $('RefineLoop: Run Form').item.json.domain || undefined }}",
+          "excludeNumericSegments": "={{ $('RefineLoop: Run Form').item.json.exclude_numeric_segments === 'true' }}",
+          "noteLanguage": "={{ $('RefineLoop: Run Form').item.json.note_language || undefined }}",
+          "outputMode": "={{ $('RefineLoop: Run Form').item.json.output_mode || 'full' }}",
+          "removeHyphenation": "={{ $('RefineLoop: Run Form').item.json.remove_hyphenation !== 'false' }}"
+        },
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        -128
+      ],
+      "id": "37d5e6c0-530b-46d7-9fc4-55e37c5707bd",
+      "name": "RefineLoop: Run",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "RefineLoop Complete",
+        "completionMessage": "Your refined XLIFF has been downloaded.\n\nWant to refine another file or try a different service?\nReload this page to start over.",
+        "inputDataFieldName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        -224
+      ],
+      "id": "90a04fcc-9b48-4a75-9758-84b156afbeb5",
+      "name": "RefineLoop: Download",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "showText",
+        "responseText": "=<h3>Something went wrong</h3>\n\n<p>Your RefineLoop job could not be completed.</p>\n\n<p>This usually happens when:</p>\n<ul>\n  <li>Your API key is invalid or expired</li>\n  <li>You've exceeded your monthly credit limit</li>\n  <li>The file is corrupted or unsupported</li>\n</ul>\n\n<p>Please verify your API key at <a href=\"https://gw.portal.ldxhub.io\">gw.portal.ldxhub.io</a> and try again.</p>\n\n<p><small>Error details: {{ typeof $json.error === 'string' ? $json.error : ($json.error?.message || $json.message || 'No additional details available.') }}</small></p>"
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -640,
+        -32
+      ],
+      "id": "9c6e5265-ddf1-4b0c-93e8-02b8b42559b6",
+      "name": "RefineLoop: Error",
+      "webhookId": ""
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Route by Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Service": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Get Models",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RefineLoop: Get Models",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RenderOCR: Get Engines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CastDoc: Get Engines",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ExtractDoc: Get Engines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Get Engines": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Select Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Select Engine": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Derive Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Derive Options": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Upload File": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Filter by File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Filter by File": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Select Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Select Output": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Inject Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Inject Binary": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractDoc: Run": {
+      "main": [
+        [
+          {
+            "node": "ExtractDoc: Download",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ExtractDoc: Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Derive Options": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Get Engines": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Select Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Select Engine": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Derive Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Upload File": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Filter by File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Filter by File": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Select Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Select Output": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Inject Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Inject Binary": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RenderOCR: Run": {
+      "main": [
+        [
+          {
+            "node": "RenderOCR: Download",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RenderOCR: Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Get Engines": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Select Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Select Engine": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Derive Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Derive Options": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Upload File": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Filter by File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Filter by File": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Select Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Select Output": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Inject Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Inject Binary": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CastDoc: Run": {
+      "main": [
+        [
+          {
+            "node": "CastDoc: Download",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CastDoc: Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StructFlow: Get Models": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Derive Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StructFlow: Derive Options": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Run Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StructFlow: Run Form": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Inject Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StructFlow: Inject Binary": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "StructFlow: Run": {
+      "main": [
+        [
+          {
+            "node": "StructFlow: Download",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "StructFlow: Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RefineLoop: Get Models": {
+      "main": [
+        [
+          {
+            "node": "RefineLoop: Derive Options",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RefineLoop: Derive Options": {
+      "main": [
+        [
+          {
+            "node": "RefineLoop: Run Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RefineLoop: Run Form": {
+      "main": [
+        [
+          {
+            "node": "RefineLoop: Inject Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RefineLoop: Inject Binary": {
+      "main": [
+        [
+          {
+            "node": "RefineLoop: Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RefineLoop: Run": {
+      "main": [
+        [
+          {
+            "node": "RefineLoop: Download",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RefineLoop: Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
