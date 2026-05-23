@@ -4,7 +4,7 @@
     {
       "parameters": {
         "formTitle": "Try LDX hub — 5 services in one workflow",
-        "formDescription": "Pick from StructFlow, RefineLoop, RenderOCR, CastDoc, or ExtractDoc — and run a one-off job with your API key. The key is consumed only for this execution and is not stored in n8n credentials.\n\n🎁 Free tier: 25,000 credits/month, no credit card required.\nGet your API key at <a href=\"https://gw.portal.ldxhub.io\">https://gw.portal.ldxhub.io</a>",
+        "formDescription": "Pick from StructFlow, RefineLoop, RenderOCR, CastDoc, or ExtractDoc — and run a one-off job with your API key. The key is consumed only for this execution and is not stored in n8n credentials.\n\n🎁 Free tier: 25,000 credits/month, no credit card required.\nGet your API key at: https://gw.portal.ldxhub.io",
         "formFields": {
           "values": [
             {
