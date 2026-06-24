@@ -3,6 +3,117 @@
   "nodes": [
     {
       "parameters": {
+        "content": "## LDX hub All Services Demo\n\n### How it works\n\nThis workflow is an interactive demo hub for multiple LDX Hub services. A form submission captures the target service and host details, routes the user into the selected service lane, gathers available models or engines, collects the required file and output settings, runs the LDX Hub operation, and presents either a download form or an error form.\n\n### Setup steps\n\n- Create one **LDXhub API** credential in n8n. Set both its Base URL and API Key fields to expressions referencing the form (e.g. ={{ $('On form submission').item.json.host }} and ={{ $('On form submission').item.json.api_key }}), then select it in each LDXhub node.\n- No static API key is stored: the key is entered in the form per execution and consumed only for that run.\n- The model/engine HTTP Request nodes call LDX hub's public metadata endpoints and need no authentication, so the dropdowns work during workflow design.\n- Get a free API key (25,000 credits/month, no credit card) at https://gw.portal.ldxhub.io\n\n### Customization\n\nCustomize the service branches by changing model or engine endpoints, filtering available output formats in the Set nodes, or adding/removing form fields for service-specific options such as OCR language or conversion targets.",
+        "width": 480,
+        "height": 760
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2816,
+        -736
+      ],
+      "id": "0d363b4e-3dd2-4c32-a331-2cfc62ea8185",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Start service routing\n\nReceives the demo form submission and switches execution into the selected LDX Hub service branch.",
+        "width": 360,
+        "height": 300,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2260,
+        -20
+      ],
+      "id": "77cd29be-6dac-4574-854d-b3eaf3c3976b",
+      "name": "Sticky Note Routing"
+    },
+    {
+      "parameters": {
+        "content": "## StructFlow\nFetch models → collect task (system prompt + example output) + JSONL file → run. Success/error outputs branch on the right.",
+        "width": 1056,
+        "height": 184,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1790,
+        -576
+      ],
+      "id": "f7c17192-796c-4059-a1b2-be11fee3b8a4",
+      "name": "Sticky StructFlow"
+    },
+    {
+      "parameters": {
+        "content": "## RefineLoop\nFetch models → upload XLIFF + optional params (revisions, domain, output mode…) → run. Success/error outputs branch on the right.",
+        "width": 1056,
+        "height": 184,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1790,
+        -192
+      ],
+      "id": "ead1ac5f-3ee0-4b42-9769-c3f86c004935",
+      "name": "Sticky RefineLoop"
+    },
+    {
+      "parameters": {
+        "content": "## RenderOCR\nPick engine → upload file → filter outputs by file type → choose format + language → run. Success/error outputs branch on the right.",
+        "width": 1728,
+        "height": 184,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1790,
+        96
+      ],
+      "id": "fe727508-1332-4dc8-b233-36cd6a201d35",
+      "name": "Sticky RenderOCR"
+    },
+    {
+      "parameters": {
+        "content": "## CastDoc\nPick engine → upload PDF → filter outputs → choose format → run (no OCR, high-fidelity). Success/error outputs branch on the right.",
+        "width": 1728,
+        "height": 184,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1790,
+        480
+      ],
+      "id": "d0a4ec8a-11ac-4c24-9860-df28e059edae",
+      "name": "Sticky CastDoc"
+    },
+    {
+      "parameters": {
+        "content": "## ExtractDoc\nPick engine → upload doc → filter outputs by file type → choose text or JSONL → run. Success/error outputs branch on the right.",
+        "width": 1728,
+        "height": 184,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1790,
+        864
+      ],
+      "id": "dde49a5e-b16f-43d2-9799-5faa96ed06d9",
+      "name": "Sticky ExtractDoc"
+    },
+    {
+      "parameters": {
         "formTitle": "Try LDX hub — 5 services in one workflow",
         "formDescription": "Pick from StructFlow, RefineLoop, RenderOCR, CastDoc, or ExtractDoc — and run a one-off job with your API key. The key is consumed only for this execution and is not stored in n8n credentials.\n\n🎁 Free tier: 25,000 credits/month, no credit card required.\nGet your API key at: https://gw.portal.ldxhub.io",
         "formFields": {
