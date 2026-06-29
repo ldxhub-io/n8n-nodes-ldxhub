@@ -4,14 +4,14 @@
     {
       "parameters": {
         "content": "## LDX hub All Services Demo\n\n### How it works\n\nThis workflow is an interactive demo hub for multiple LDX Hub services. A form submission captures the target service and host details, routes the user into the selected service lane, gathers available models or engines, collects the required file and output settings, runs the LDX Hub operation, and presents either a download form or an error form.\n\n### Setup steps\n\n- Create one **LDXhub API** credential in n8n. Set both its Base URL and API Key fields to expressions referencing the form (e.g. ={{ $('On form submission').item.json.host }} and ={{ $('On form submission').item.json.api_key }}), then select it in each LDXhub node.\n- No static API key is stored: the key is entered in the form per execution and consumed only for that run.\n- The model/engine HTTP Request nodes call LDX hub's public metadata endpoints and need no authentication, so the dropdowns work during workflow design.\n- Get a free API key (25,000 credits/month, no credit card) at https://gw.portal.ldxhub.io\n\n### Customization\n\nCustomize the service branches by changing model or engine endpoints, filtering available output formats in the Set nodes, or adding/removing form fields for service-specific options such as OCR language or conversion targets.",
-        "width": 480,
-        "height": 760
+        "width": 520,
+        "height": 900
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2816,
-        -736
+        -2980,
+        -792
       ],
       "id": "0d363b4e-3dd2-4c32-a331-2cfc62ea8185",
       "name": "Sticky Note"
@@ -19,15 +19,15 @@
     {
       "parameters": {
         "content": "## Start service routing\n\nReceives the demo form submission and switches execution into the selected LDX Hub service branch.",
-        "width": 360,
-        "height": 300,
+        "width": 250,
+        "height": 240,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         -2260,
-        -20
+        -792
       ],
       "id": "77cd29be-6dac-4574-854d-b3eaf3c3976b",
       "name": "Sticky Note Routing"
@@ -35,15 +35,15 @@
     {
       "parameters": {
         "content": "## StructFlow\nFetch models → collect task (system prompt + example output) + JSONL file → run. Success/error outputs branch on the right.",
-        "width": 1056,
-        "height": 184,
+        "width": 1360,
+        "height": 150,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1790,
-        -576
+        -1520,
+        -682
       ],
       "id": "f7c17192-796c-4059-a1b2-be11fee3b8a4",
       "name": "Sticky StructFlow"
@@ -51,15 +51,15 @@
     {
       "parameters": {
         "content": "## RefineLoop\nFetch models → upload XLIFF + optional params (revisions, domain, output mode…) → run. Success/error outputs branch on the right.",
-        "width": 1056,
-        "height": 184,
+        "width": 1360,
+        "height": 150,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1790,
-        -192
+        -1520,
+        -122
       ],
       "id": "ead1ac5f-3ee0-4b42-9769-c3f86c004935",
       "name": "Sticky RefineLoop"
@@ -67,15 +67,15 @@
     {
       "parameters": {
         "content": "## RenderOCR\nPick engine → upload file → filter outputs by file type → choose format + language → run. Success/error outputs branch on the right.",
-        "width": 1728,
-        "height": 184,
+        "width": 2032,
+        "height": 150,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1790,
-        96
+        -1520,
+        438
       ],
       "id": "fe727508-1332-4dc8-b233-36cd6a201d35",
       "name": "Sticky RenderOCR"
@@ -83,15 +83,15 @@
     {
       "parameters": {
         "content": "## CastDoc\nPick engine → upload PDF → filter outputs → choose format → run (no OCR, high-fidelity). Success/error outputs branch on the right.",
-        "width": 1728,
-        "height": 184,
+        "width": 2032,
+        "height": 150,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1790,
-        480
+        -1520,
+        998
       ],
       "id": "d0a4ec8a-11ac-4c24-9860-df28e059edae",
       "name": "Sticky CastDoc"
@@ -99,15 +99,15 @@
     {
       "parameters": {
         "content": "## ExtractDoc\nPick engine → upload doc → filter outputs by file type → choose text or JSONL → run. Success/error outputs branch on the right.",
-        "width": 1728,
-        "height": 184,
+        "width": 2032,
+        "height": 150,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1790,
-        864
+        -1520,
+        1558
       ],
       "id": "dde49a5e-b16f-43d2-9799-5faa96ed06d9",
       "name": "Sticky ExtractDoc"
@@ -166,7 +166,7 @@
       "typeVersion": 2.5,
       "position": [
         -2208,
-        160
+        -512
       ],
       "id": "b202794e-cc96-4533-bdc1-9defae272be8",
       "name": "On form submission",
@@ -310,7 +310,7 @@
       "typeVersion": 3.4,
       "position": [
         -1984,
-        112
+        -560
       ],
       "id": "7e5efd31-f480-4f09-b0e7-8690188e5699",
       "name": "Route by Service"
@@ -323,8 +323,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -1760,
-        928
+        -1500,
+        1728
       ],
       "id": "463eb164-1a2d-41ef-b1d0-74c5158e8a24",
       "name": "ExtractDoc: Get Engines"
@@ -342,8 +342,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1536,
-        928
+        -1276,
+        1728
       ],
       "id": "c98da180-919c-40e5-9d62-bb3f45c0de46",
       "name": "ExtractDoc: Select Engine",
@@ -372,8 +372,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1312,
-        928
+        -1052,
+        1728
       ],
       "id": "912c9ea2-ac7b-4afb-bcb6-0815820f6020",
       "name": "ExtractDoc: Derive Options"
@@ -391,8 +391,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1088,
-        928
+        -828,
+        1728
       ],
       "id": "a1c312e9-285a-4b20-8f4a-031ef95c4e15",
       "name": "ExtractDoc: Upload File",
@@ -415,8 +415,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -864,
-        928
+        -604,
+        1728
       ],
       "id": "df7e2e1d-17ad-4287-8081-4e83d007498e",
       "name": "ExtractDoc: Filter by File"
@@ -434,8 +434,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        928
+        -380,
+        1728
       ],
       "id": "c8220aae-b78f-4dbc-b4cc-96581f613027",
       "name": "ExtractDoc: Select Output",
@@ -450,8 +450,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        1024
+        292,
+        1888
       ],
       "id": "23317263-a599-4862-8929-b74e64ccef95",
       "name": "ExtractDoc: Error",
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -416,
-        928
+        -156,
+        1728
       ],
       "id": "e576985e-ae6b-478e-8a47-9156186b64e9",
       "name": "ExtractDoc: Inject Binary"
@@ -484,8 +484,8 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        -192,
-        928
+        68,
+        1728
       ],
       "id": "9a1140ed-08f0-448f-8271-f853ab23d714",
       "name": "ExtractDoc: Run",
@@ -509,8 +509,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        832
+        292,
+        1728
       ],
       "id": "299edb27-3a53-4921-9898-7a4ab3215d9d",
       "name": "ExtractDoc: Download",
@@ -545,8 +545,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1312,
-        160
+        -1052,
+        608
       ],
       "id": "7cb13407-1ef8-4425-a789-f29d19f9eaf7",
       "name": "RenderOCR: Derive Options"
@@ -559,8 +559,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -1760,
-        160
+        -1500,
+        608
       ],
       "id": "c044ca22-81c9-4b52-a305-6d9486235455",
       "name": "RenderOCR: Get Engines"
@@ -578,8 +578,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1536,
-        160
+        -1276,
+        608
       ],
       "id": "9d6c4004-a4d0-40d2-9273-b8fc122d0073",
       "name": "RenderOCR: Select Engine",
@@ -598,8 +598,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1088,
-        160
+        -828,
+        608
       ],
       "id": "ed89e6e6-d7ad-4339-90ec-12ab20bbac6c",
       "name": "RenderOCR: Upload File",
@@ -622,8 +622,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -864,
-        160
+        -604,
+        608
       ],
       "id": "57f0430f-b257-49ca-bab8-9ea28f02f25a",
       "name": "RenderOCR: Filter by File"
@@ -641,8 +641,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        160
+        -380,
+        608
       ],
       "id": "5c665d6b-7c8c-4e9c-b300-68c41b04481d",
       "name": "RenderOCR: Select Output",
@@ -655,8 +655,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -416,
-        160
+        -156,
+        608
       ],
       "id": "43fe75c9-2014-4227-b3e7-96c966fb8186",
       "name": "RenderOCR: Inject Binary"
@@ -676,8 +676,8 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        -192,
-        160
+        68,
+        608
       ],
       "id": "ceaa6712-49f6-4f48-8982-142c9bb50666",
       "name": "RenderOCR: Run",
@@ -701,8 +701,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        64
+        292,
+        608
       ],
       "id": "db9992af-90a7-4f68-89b4-48f241f6d392",
       "name": "RenderOCR: Download",
@@ -717,8 +717,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        256
+        292,
+        768
       ],
       "id": "f0da25e9-4911-40ed-afa2-323c1d50739f",
       "name": "RenderOCR: Error",
@@ -732,8 +732,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -1760,
-        544
+        -1500,
+        1168
       ],
       "id": "182202a9-7c15-4f96-b57c-6017475c12e2",
       "name": "CastDoc: Get Engines"
@@ -751,8 +751,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1536,
-        544
+        -1276,
+        1168
       ],
       "id": "ab350ef7-ec4c-4a63-9cf3-51a167839006",
       "name": "CastDoc: Select Engine",
@@ -781,8 +781,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1312,
-        544
+        -1052,
+        1168
       ],
       "id": "f8381269-e519-4475-9722-63d263d3a59f",
       "name": "CastDoc: Derive Options"
@@ -800,8 +800,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1088,
-        544
+        -828,
+        1168
       ],
       "id": "01d491f8-55ce-4899-a772-8b8f02a0a5ad",
       "name": "CastDoc: Upload File",
@@ -824,8 +824,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -864,
-        544
+        -604,
+        1168
       ],
       "id": "f1bdf991-4931-4b9d-8dd1-043c5ecae454",
       "name": "CastDoc: Filter by File"
@@ -843,8 +843,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        544
+        -380,
+        1168
       ],
       "id": "1663df39-742b-4129-806a-7250985425f2",
       "name": "CastDoc: Select Output",
@@ -857,8 +857,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -416,
-        544
+        -156,
+        1168
       ],
       "id": "323880ad-4088-4c20-b5d1-33d56f8f811e",
       "name": "CastDoc: Inject Binary"
@@ -877,8 +877,8 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        -192,
-        544
+        68,
+        1168
       ],
       "id": "5d70f97f-8850-4c77-8dcb-bd6f803bc971",
       "name": "CastDoc: Run",
@@ -902,8 +902,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        448
+        292,
+        1168
       ],
       "id": "f23c14db-4639-46ae-a190-9275f63595ad",
       "name": "CastDoc: Download",
@@ -918,8 +918,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        32,
-        640
+        292,
+        1328
       ],
       "id": "44e7f4d4-73bd-4b60-a739-2c54ab95f884",
       "name": "CastDoc: Error",
@@ -933,7 +933,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -1760,
+        -1500,
         -512
       ],
       "id": "aa752b4d-cd70-4b78-9810-68ce881fe42a",
@@ -956,7 +956,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1536,
+        -1276,
         -512
       ],
       "id": "14c9744e-bbfb-4b64-9bf8-0f961b4989c7",
@@ -975,7 +975,7 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1312,
+        -1052,
         -512
       ],
       "id": "bb2639ff-8cf9-4a3d-8e85-6431aa079336",
@@ -989,7 +989,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1088,
+        -828,
         -512
       ],
       "id": "6b14298b-3df0-465b-8273-30438a757022",
@@ -1011,7 +1011,7 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        -864,
+        -604,
         -512
       ],
       "id": "9f8d3730-d7e2-40c4-81d8-db7e7c8002ca",
@@ -1036,8 +1036,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        -608
+        -380,
+        -512
       ],
       "id": "499500f0-ae1f-4c49-93f5-658856533153",
       "name": "StructFlow: Download",
@@ -1052,8 +1052,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        -416
+        -380,
+        -352
       ],
       "id": "1639e4f2-fb0e-4b06-bd92-15e63365b1cd",
       "name": "StructFlow: Error",
@@ -1067,8 +1067,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -1760,
-        -128
+        -1500,
+        48
       ],
       "id": "541d30fc-438e-411b-92cc-fd3964afeb01",
       "name": "RefineLoop: Get Models"
@@ -1090,8 +1090,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1536,
-        -128
+        -1276,
+        48
       ],
       "id": "d41146ce-4fb4-4d3c-ab0d-39b7bb2c160b",
       "name": "RefineLoop: Derive Options"
@@ -1109,8 +1109,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -1312,
-        -128
+        -1052,
+        48
       ],
       "id": "5dd092ce-f3cd-49db-87c3-6825682b6291",
       "name": "RefineLoop: Run Form",
@@ -1123,8 +1123,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1088,
-        -128
+        -828,
+        48
       ],
       "id": "ec00cba0-1cbb-4716-9bbd-7f46feb9d61a",
       "name": "RefineLoop: Inject Binary"
@@ -1151,8 +1151,8 @@
       "type": "n8n-nodes-ldxhub.ldxHub",
       "typeVersion": 1,
       "position": [
-        -864,
-        -128
+        -604,
+        48
       ],
       "id": "37d5e6c0-530b-46d7-9fc4-55e37c5707bd",
       "name": "RefineLoop: Run",
@@ -1176,8 +1176,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        -224
+        -380,
+        48
       ],
       "id": "90a04fcc-9b48-4a75-9758-84b156afbeb5",
       "name": "RefineLoop: Download",
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 2.5,
       "position": [
-        -640,
-        -32
+        -380,
+        208
       ],
       "id": "9c6e5265-ddf1-4b0c-93e8-02b8b42559b6",
       "name": "RefineLoop: Error",
