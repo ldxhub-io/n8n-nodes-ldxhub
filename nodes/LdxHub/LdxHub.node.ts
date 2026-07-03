@@ -6,6 +6,8 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
+import { getAnalyzeDocModels } from './methods/loadOptions/getAnalyzeDocModels';
+import { getAnalyzeDocOutputFormats } from './methods/loadOptions/getAnalyzeDocOutputFormats';
 import { getCastDocEngines } from './methods/loadOptions/getCastDocEngines';
 import { getCastDocOutputFormats } from './methods/loadOptions/getCastDocOutputFormats';
 import { getExtractDocEngines } from './methods/loadOptions/getExtractDocEngines';
@@ -15,6 +17,8 @@ import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
 import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
 import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOutputFormats';
 import { getStructFlowModels } from './methods/loadOptions/getStructFlowModels';
+import { analyzeDocDescription } from './resources/analyzeDoc';
+import { runJobExecute as analyzeDocRunJobExecute } from './resources/analyzeDoc/runJob.execute';
 import { castDocDescription } from './resources/castDoc';
 import { runJobExecute as castDocRunJobExecute } from './resources/castDoc/runJob.execute';
 import { extractDocDescription } from './resources/extractDoc';
@@ -55,6 +59,10 @@ export class LdxHub implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'AnalyzeDoc',
+						value: 'analyzeDoc',
+					},
+					{
 						name: 'CastDoc',
 						value: 'castDoc',
 					},
@@ -77,6 +85,7 @@ export class LdxHub implements INodeType {
 				],
 				default: 'refineLoop',
 			},
+			...analyzeDocDescription,
 			...castDocDescription,
 			...extractDocDescription,
 			...refineLoopDescription,
@@ -87,6 +96,8 @@ export class LdxHub implements INodeType {
 
 	methods = {
 		loadOptions: {
+			getAnalyzeDocModels,
+			getAnalyzeDocOutputFormats,
 			getCastDocEngines,
 			getCastDocOutputFormats,
 			getExtractDocEngines,
@@ -104,6 +115,9 @@ export class LdxHub implements INodeType {
 		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
 
+		if (resource === 'analyzeDoc' && operation === 'runJob') {
+			return analyzeDocRunJobExecute.call(this, items);
+		}
 		if (resource === 'castDoc' && operation === 'runJob') {
 			return castDocRunJobExecute.call(this, items);
 		}
