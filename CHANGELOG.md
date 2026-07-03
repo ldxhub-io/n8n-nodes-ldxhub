@@ -13,7 +13,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.2...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...HEAD)
+
+## [0.10.0] - 2026-07-03
+
+### Added
+- New resource: **AnalyzeDoc** (6th service) — extract structured JSON from PDF/JPEG/PNG documents with a vision AI model, following your prompt and example output. Model dropdown loads 15 vision models dynamically; output format is derived per selected model.
+
+### Changed
+- `package.json` description and keywords updated to cover all six services (previously listed four)
 
 ## [0.9.2] - 2026-05-23
 
@@ -185,7 +193,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Icon path correction after repository structure cleanup
 
-[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.2...HEAD
+[Unreleased]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...HEAD
+[0.10.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.2...0.10.0
 [0.9.2]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.1...0.9.2
 [0.9.1]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.8.3...0.9.0
