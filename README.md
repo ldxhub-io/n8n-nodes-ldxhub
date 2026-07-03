@@ -9,7 +9,7 @@
 > ✅ **One key for everything** — OpenAI, Anthropic, Google, AWS, Azure, xAI  
 > ✅ **30-second sign-up** — GitHub, Google, or email; your API key is shown immediately
 
-n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and plain-text/JSONL extraction (ExtractDoc).
+n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), vision document analysis (AnalyzeDoc), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and plain-text/JSONL extraction (ExtractDoc).
 
 ## Table of Contents
 
@@ -20,6 +20,7 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
 - [Credentials Setup](#credentials-setup)
 - [Usage](#usage)
   - [StructFlow](#structflow--extract-structured-data-from-text)
+  - [AnalyzeDoc](#analyzedoc--extract-structured-json-from-documents-vision-ai)
   - [RefineLoop](#refineloop--xliff-translation-refinement)
   - [RenderOCR](#renderocr--pdfimage-to-office)
   - [CastDoc](#castdoc--text-based-pdf-to-office-no-ocr)
@@ -50,6 +51,7 @@ For traditional single-service usage with a static credential, see [Usage](#usag
 ## Features
 
 - **StructFlow**: Extract structured JSON from unstructured text using AI models (medical records, customer feedback, legal documents, and more)
+- **AnalyzeDoc**: Extract structured JSON from PDF/JPEG/PNG documents using vision AI models, following your prompt and example output (the image counterpart to StructFlow)
 - **RefineLoop**: Iteratively improve XLIFF translation quality using frontier AI models (Google Gemini, Anthropic Claude, OpenAI GPT, and more)
 - **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - **CastDoc**: Convert text-based PDFs to Word/Excel/PowerPoint without OCR (high-fidelity layout preservation for digital-born documents)
@@ -118,6 +120,12 @@ The Model and Engine dropdowns load from LDX hub's public metadata endpoints wit
    - **Binary File**: Provide a JSONL file as binary input (good for large batches, or as part of an ExtractDoc → StructFlow pipeline)
 
 **Examples**: [Inline mode](examples/structflow-inline-demo.json) · [Binary mode](examples/structflow-binary-demo.json) · [Dynamic API key](examples/structflow-dynamic-inline-demo.json)
+
+### AnalyzeDoc — extract structured JSON from documents (vision AI)
+
+1. Resource: **AnalyzeDoc** → Operation: **Run Analysis Job**
+2. Provide a PDF, JPEG, or PNG file via binary input
+3. Choose a vision model, write a System Prompt, provide an Example Output (JSON), and pick the output format
 
 ### RefineLoop — XLIFF translation refinement
 
