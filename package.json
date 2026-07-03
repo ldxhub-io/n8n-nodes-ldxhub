@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-ldxhub",
-	"version": "0.9.2",
+	"version": "0.10.0",
 	"description": "n8n community node for LDX hub — AI-powered document processing platform with vision document analysis (AnalyzeDoc), text-based PDF conversion (CastDoc), document text extraction (ExtractDoc), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), and structured data extraction (StructFlow)",
 	"license": "MIT",
 	"homepage": "https://ldxlab.io/ldxhub",
