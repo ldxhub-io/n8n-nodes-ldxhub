@@ -1,0 +1,92 @@
+{
+  "name": "AnalyzeDoc Demo",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9589530e-d0a2-4f10-a084-09acd507a961",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/path/to/your/document.pdf",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ff441c3b-d00e-48f0-a4aa-b22e86f58798",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "resource": "analyzeDoc",
+        "binaryPropertyName": "data",
+        "model": "google/gemini-3.5-flash@high",
+        "system_prompt": "提供された医師の診察メモ（note）を分析し、以下のJSON構造を出力してください。\nsymptoms: 患者の訴えや確認された症状を文字列の配列として抽出。\ndiagnosis: 確定診断名、または最も疑わしい病名を抽出（1つの文字列）。\ntreatment: 実施された処置、指示、または処方された薬剤名を文字列の配列として抽出。",
+        "example_output": "{\"symptoms\":[\"発熱\",\"咽頭痛\",\"嚥下困難\"], \"diagnosis\":\"急性化膿性扁桃炎（溶連菌感染症）\", \"treatment\":[\"アモキシシリンカプセル処方\",\"ロキソプロフェンナトリウム処方\",\"安静と水分補給の指示\"]}",
+        "output_format": "json",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "3d1df95b-d5ed-48d6-a82c-cf008f4b3882",
+      "name": "Run a analyzedoc job",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Run a analyzedoc job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "tags": []
+}

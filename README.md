@@ -44,7 +44,7 @@ After [installation](#installation):
 4. Select this credential in each LDXhub node
 5. Run the workflow — enter your API key (and optionally a custom host) in the form
 
-All 5 services (StructFlow / RefineLoop / RenderOCR / CastDoc / ExtractDoc) accessible from a single Form Trigger. **The API key is consumed per execution, never stored in n8n.**
+All 6 services (StructFlow / AnalyzeDoc / RefineLoop / RenderOCR / CastDoc / ExtractDoc) accessible from a single Form Trigger. **The API key is consumed per execution, never stored in n8n.**
 
 For traditional single-service usage with a static credential, see [Usage](#usage) below.
 
@@ -126,6 +126,8 @@ The Model and Engine dropdowns load from LDX hub's public metadata endpoints wit
 1. Resource: **AnalyzeDoc** → Operation: **Run Analysis Job**
 2. Provide a PDF, JPEG, or PNG file via binary input
 3. Choose a vision model, write a System Prompt, provide an Example Output (JSON), and pick the output format
+
+**Example**: [AnalyzeDoc workflow](examples/analyzedoc-demo.json)
 
 ### RefineLoop — XLIFF translation refinement
 

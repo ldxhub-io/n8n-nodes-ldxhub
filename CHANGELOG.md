@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...HEAD)
 
+### Added
+- `examples/analyzedoc-demo.json`: standalone AnalyzeDoc demo (vision extraction from a PDF/image)
+- `examples/all-services-demo.json`: extended to 6 services with a new AnalyzeDoc lane
+  (model → task & file → output flow, output formats filtered by uploaded file type)
+
+### Fixed
+- `examples/all-services-demo.json`: file upload accept filters now include `.jpg` / `.tif`
+  aliases (RenderOCR and AnalyzeDoc lanes) so common photo/scan extensions are selectable
+
 ## [0.10.0] - 2026-07-03
 
 ### Added
