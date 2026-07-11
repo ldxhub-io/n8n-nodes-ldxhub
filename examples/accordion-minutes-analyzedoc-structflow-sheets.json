@@ -151,9 +151,9 @@
     },
     {
       "parameters": {
-        "content": "## Accordion Pipeline: Meeting Minutes → Action Items\nUpload multi-page meeting minutes (PDF) via the built-in form. Stage 1 — **LDX hub AnalyzeDoc** reads the whole document and splits it into agenda segments *by meaning* (a topic that crosses a page boundary stays in one piece). Stage 2 — **LDX hub StructFlow** extracts every decision and action item from each segment. One document in, N rows out.\n\n**Setup**\n1. Install the verified community node `n8n-nodes-ldxhub` (v0.10.0 or later) and create an **LDXhub API** credential — get a free API key at https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).\n2. Create a Google Sheet with this header row:\n`agenda_no, agenda_title, item_type, item, owner, due_date`\n3. In **Append Rows to Google Sheets**, select your Google credential, spreadsheet, and sheet.\n4. Activate the workflow, open the form URL, and upload the minutes.\n\nNote: one run executes two AI jobs (segmenter + extractor).",
+        "content": "## Accordion Pipeline: Meeting Minutes → Action Items\nUpload multi-page meeting minutes (PDF) via the built-in form. Stage 1 — **LDX hub AnalyzeDoc** reads the whole document and splits it into agenda segments *by meaning* (a topic that crosses a page boundary stays in one piece). Stage 2 — **LDX hub StructFlow** extracts every decision and action item from each segment. One document in, N rows out.\n\n**Setup**\n1. Install the verified community node `n8n-nodes-ldxhub` (v0.10.0 or later) and create an **LDXhub API** credential — get a free API key at https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).\n2. Create a Google Sheet with this header row:\n`agenda_no, agenda_title, item_type, item, owner, due_date`\n3. In **Append Rows to Google Sheets**, select your Google credential, spreadsheet, and sheet.\n4. After picking the sheet, set Mapping Column Mode back to **Map Automatically** — n8n switches it to manual when a sheet is selected.\n5. Activate the workflow, open the form URL, and upload the minutes.\n\nNote: one run executes two AI jobs (segmenter + extractor).",
         "width": 500,
-        "height": 880,
+        "height": 940,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",

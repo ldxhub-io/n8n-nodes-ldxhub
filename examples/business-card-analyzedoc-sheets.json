@@ -98,7 +98,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        672,
+        896,
         0
       ],
       "id": "74122748-f7b8-4d26-99c1-110387a1a911",
@@ -112,9 +112,9 @@
     },
     {
       "parameters": {
-        "content": "## Business Card → Google Sheets\nUpload a business card photo or scan via the built-in form — **LDX hub AnalyzeDoc** (vision AI) reads the card and appends the contact details as one row to your Google Sheet.\n\n**Setup**\n1. Install the verified community node `n8n-nodes-ldxhub` (v0.10.0 or later) and create an **LDXhub API** credential — get a free API key at https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).\n2. Create a Google Sheet with this header row:\n`full_name, job_title, company, department, email, phone, mobile, address, website, notes`\n3. In **Append Row to Google Sheets**, select your Google credential, spreadsheet, and sheet.\n4. Activate the workflow and open the form URL — that's it.",
+        "content": "## Business Card → Google Sheets\nUpload a business card photo or scan via the built-in form — **LDX hub AnalyzeDoc** (vision AI) reads the card and appends the contact details as one row to your Google Sheet.\n\n**Setup**\n1. Install the verified community node `n8n-nodes-ldxhub` (v0.10.0 or later) and create an **LDXhub API** credential — get a free API key at https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).\n2. Create a Google Sheet with this header row:\n`full_name, job_title, company, department, email, phone, mobile, address, website, notes`\n3. In **Append Row to Google Sheets**, select your Google credential, spreadsheet, and sheet.\n4. After picking the sheet, set Mapping Column Mode back to **Map Automatically** — n8n switches it to manual when a sheet is selected.\n5. Activate the workflow and open the form URL — that's it.",
         "width": 500,
-        "height": 760,
+        "height": 820,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -141,6 +141,19 @@
       ],
       "id": "58dff8d1-62f1-4513-99e2-8915191512ab",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Lift the parsed fields from $json.data to the top level\n// so Google Sheets auto-mapping can match your column headers.\nreturn $input.all().map(item => ({ json: item.json.data }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "7ebaa3fb-6fc3-48e4-9618-1e86796807d9",
+      "name": "Flatten for Sheets"
     }
   ],
   "pinData": {},
@@ -168,6 +181,17 @@
       ]
     },
     "Parse Extracted JSON": {
+      "main": [
+        [
+          {
+            "node": "Flatten for Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Flatten for Sheets": {
       "main": [
         [
           {
