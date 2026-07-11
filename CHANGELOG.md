@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `examples/analyzedoc-demo.json`: standalone AnalyzeDoc demo (vision extraction from a PDF/image)
 - `examples/all-services-demo.json`: extended to 6 services with a new AnalyzeDoc lane
   (model → task & file → output flow, output formats filtered by uploaded file type)
+- Ready-to-use templates: `examples/invoice-analyzedoc-sheets.json`,
+  `examples/business-card-analyzedoc-sheets.json`, and
+  `examples/accordion-minutes-analyzedoc-structflow-sheets.json` — self-contained
+  form-to-Google-Sheets workflows behind the n8n.io template gallery entries
+- `examples/README.md`: new "Ready-to-Use Templates" section listing them
 
 ### Fixed
 - `examples/all-services-demo.json`: file upload accept filters now include `.jpg` / `.tif`

@@ -105,7 +105,7 @@ The Model and Engine dropdowns load from LDX hub's public metadata endpoints wit
 
 ## Usage
 
-> 💡 **Examples**: All ready-to-use workflows are in [`examples/`](examples/). Each individual demo requires a **LDXhub API** credential and a placeholder input file path to be updated.
+> 💡 **Examples**: All ready-to-use workflows are in [`examples/`](examples/). Each individual demo requires a **LDXhub API** credential and a placeholder input file path to be updated. Ready-to-use form-to-Google-Sheets templates (invoice, business card, accordion pipeline) are listed in [`examples/README.md`](examples/README.md#ready-to-use-templates) and on the [n8n.io template gallery](https://n8n.io/creators/hidekimori/).
 
 1. Add **LDXhub API** credentials (see [Credentials Setup](#credentials-setup))
 2. Add the **LDXhub** node to your workflow

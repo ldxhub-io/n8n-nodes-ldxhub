@@ -1,0 +1,188 @@
+{
+  "name": "Extract Invoice Data (PDF/Image) to Google Sheets with LDX hub AnalyzeDoc",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Invoice → Google Sheets",
+        "formDescription": "Upload an invoice (PDF, JPEG, or PNG). LDX hub AnalyzeDoc extracts the key fields and appends them as one row to a Google Sheet.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Invoice File",
+              "fieldType": "file",
+              "fieldName": "invoice_file",
+              "acceptFileTypes": ".pdf,.jpg,.jpeg,.png",
+              "multipleFiles": false,
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Extract"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "13cf1006-5b97-48fd-a68c-6f0ae1842588",
+      "name": "On form submission",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "resource": "analyzeDoc",
+        "binaryPropertyName": "invoice_file",
+        "model": "google/gemini-3.5-flash@high",
+        "system_prompt": "Extract the following fields from the provided invoice document.\n\nRules:\n- Dates: ISO 8601 format (YYYY-MM-DD).\n- Monetary amounts (subtotal, tax, total): plain numbers without currency symbols or thousands separators.\n- currency: ISO 4217 code (e.g. \"USD\", \"EUR\", \"JPY\").\n- Phone or fax numbers, if any: do not start the value with a \"+\" (use \"81-3-1234-5678\" or \"(+81) 3-1234-5678\") so they stay readable as text in spreadsheets.\n- vendor_tax_id: the vendor's tax registration number (VAT ID, EIN, or a local equivalent such as a Japanese qualified invoice issuer number).\n- If a field is not present in the document, use an empty string \"\" for text fields and 0 for amounts.\n\nFields:\n- invoice_number: the invoice identifier\n- issue_date: date the invoice was issued\n- due_date: payment due date\n- vendor_name: name of the issuing company\n- vendor_address: full address of the issuing company\n- vendor_tax_id: vendor's tax registration number\n- bill_to: name of the billed customer or company\n- subtotal: amount before tax\n- tax: tax amount\n- total: total amount due\n- currency: currency of the amounts\n- payment_terms: payment terms as written (e.g. \"Net 30\")",
+        "example_output": "{\"invoice_number\":\"\",\"issue_date\":\"\",\"due_date\":\"\",\"vendor_name\":\"\",\"vendor_address\":\"\",\"vendor_tax_id\":\"\",\"bill_to\":\"\",\"subtotal\":1234.56,\"tax\":123.45,\"total\":1358.01,\"currency\":\"\",\"payment_terms\":\"\"}",
+        "output_format": "json",
+        "pollingSettings": {
+          "pollingMaxAttempts": 180,
+          "serverWaitSeconds": 10
+        }
+      },
+      "type": "n8n-nodes-ldxhub.ldxHub",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "33450d01-50f0-4dd9-8cd9-5252b23653f9",
+      "name": "AnalyzeDoc: Extract Invoice Fields",
+      "credentials": {
+        "ldxHubApi": {
+          "id": "",
+          "name": "LDXhub API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "binaryPropertyName": "invoice_file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "1425676c-e888-4731-a7d6-d88b7d8f6f68",
+      "name": "Parse Extracted JSON"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "820bfc3e-6ec5-4186-b1b4-90c5517cb1b5",
+      "name": "Append Row to Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Invoice → Google Sheets\nUpload an invoice via the built-in form — **LDX hub AnalyzeDoc** (vision AI) reads the PDF/image and appends the extracted fields as one row to your Google Sheet.\n\n**Setup**\n1. Install the verified community node `n8n-nodes-ldxhub` (v0.10.0 or later) and create an **LDXhub API** credential — get a free API key at https://gw.portal.ldxhub.io (25,000 credits/month, no credit card).\n2. Create a Google Sheet with this header row:\n`invoice_number, issue_date, due_date, vendor_name, vendor_address, vendor_tax_id, bill_to, subtotal, tax, total, currency, payment_terms`\n3. In **Append Row to Google Sheets**, select your Google credential, spreadsheet, and sheet.\n4. Activate the workflow and open the form URL — that's it.",
+        "width": 500,
+        "height": 760,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -160
+      ],
+      "id": "84bcb0b4-004f-4880-9d96-170f1cb008a1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Customize the extraction\nEdit **System Prompt** and **Example Output** in the AnalyzeDoc node to change the fields — the Example Output defines the output schema.\nTip: write amounts with decimals (e.g. 1234.56) so they stay numeric. Works with invoices in any language.",
+        "width": 360,
+        "height": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -360
+      ],
+      "id": "08cd39b0-a2ae-4110-ad6d-9cfdd9d2ff62",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AnalyzeDoc: Extract Invoice Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AnalyzeDoc: Extract Invoice Fields": {
+      "main": [
+        [
+          {
+            "node": "Parse Extracted JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Extracted JSON": {
+      "main": [
+        [
+          {
+            "node": "Append Row to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}

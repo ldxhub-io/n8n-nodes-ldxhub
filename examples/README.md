@@ -6,6 +6,16 @@ Sample n8n workflows demonstrating LDX hub integration.
 
 **[`all-services-demo.json`](all-services-demo.json)** — Try all 6 services (StructFlow / AnalyzeDoc / RefineLoop / RenderOCR / CastDoc / ExtractDoc) from a single Form Trigger. Your API key is entered per execution (one credential with expression-based fields required — see the [main README's Quick Start](../README.md#quick-start) for setup). **Best starting point.**
 
+## Ready-to-Use Templates
+
+Self-contained workflows behind our templates on the [n8n.io template gallery](https://n8n.io/creators/hidekimori/) — built-in form in, Google Sheets out, no local file paths. Require `n8n-nodes-ldxhub` **v0.10.0 or later**. Setup steps (including the Google Sheet header row) are on the sticky note inside each workflow.
+
+| File | Services | Description |
+|---|---|---|
+| [`invoice-analyzedoc-sheets.json`](invoice-analyzedoc-sheets.json) | AnalyzeDoc | Upload an invoice (PDF/JPEG/PNG) via the built-in form — 12 key fields are extracted and appended as one row to Google Sheets |
+| [`business-card-analyzedoc-sheets.json`](business-card-analyzedoc-sheets.json) | AnalyzeDoc | Upload a business card photo or scan — contact details are appended as one row to Google Sheets (bilingual cards supported) |
+| [`accordion-minutes-analyzedoc-structflow-sheets.json`](accordion-minutes-analyzedoc-structflow-sheets.json) | AnalyzeDoc + StructFlow | **Accordion Pipeline**: multi-page meeting minutes are segmented by agenda topic (AnalyzeDoc), then every decision and action item is extracted per segment (StructFlow) — one document in, one row per item out |
+
 ## Individual Service Demos
 
 | File | Resource | Description |
