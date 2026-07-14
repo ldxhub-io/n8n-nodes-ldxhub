@@ -15,6 +15,7 @@ Self-contained workflows behind our templates on the [n8n.io template gallery](h
 | [`invoice-analyzedoc-sheets.json`](invoice-analyzedoc-sheets.json) | AnalyzeDoc | Upload an invoice (PDF/JPEG/PNG) via the built-in form — 12 key fields are extracted and appended as one row to Google Sheets |
 | [`business-card-analyzedoc-sheets.json`](business-card-analyzedoc-sheets.json) | AnalyzeDoc | Upload a business card photo or scan — contact details are appended as one row to Google Sheets (bilingual cards supported) |
 | [`accordion-minutes-analyzedoc-structflow-sheets.json`](accordion-minutes-analyzedoc-structflow-sheets.json) | AnalyzeDoc + StructFlow | **Accordion Pipeline**: multi-page meeting minutes are segmented by agenda topic (AnalyzeDoc), then every decision and action item is extracted per segment (StructFlow) — one document in, one row per item out |
+| [`classify-route-invoice-analyzedoc-sheets.json`](classify-route-invoice-analyzedoc-sheets.json) | AnalyzeDoc | Upload any business document — a low-detail pass classifies it (invoice/receipt/business card/etc.), then a Switch routes it by type; the invoice branch extracts 12 fields to Google Sheets, other types are ready-to-extend placeholders |
 
 ## Individual Service Demos
 

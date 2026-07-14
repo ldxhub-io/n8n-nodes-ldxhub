@@ -20,14 +20,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `examples/all-services-demo.json`: extended to 6 services with a new AnalyzeDoc lane
   (model → task & file → output flow, output formats filtered by uploaded file type)
 - Ready-to-use templates: `examples/invoice-analyzedoc-sheets.json`,
-  `examples/business-card-analyzedoc-sheets.json`, and
-  `examples/accordion-minutes-analyzedoc-structflow-sheets.json` — self-contained
+  `examples/business-card-analyzedoc-sheets.json`,
+  `examples/accordion-minutes-analyzedoc-structflow-sheets.json`, and
+  `examples/classify-route-invoice-analyzedoc-sheets.json` — self-contained
   form-to-Google-Sheets workflows behind the n8n.io template gallery entries
 - `examples/README.md`: new "Ready-to-Use Templates" section listing them
 
 ### Fixed
 - `examples/all-services-demo.json`: file upload accept filters now include `.jpg` / `.tif`
   aliases (RenderOCR and AnalyzeDoc lanes) so common photo/scan extensions are selectable
+- Ready-to-use templates (`invoice-`, `business-card-analyzedoc-sheets.json`):
+  insert a Flatten code node so Google Sheets auto-mapping matches the parsed
+  fields — Extract From File (fromJson) nests them under `data`. All three
+  form-to-Sheets templates now document the "Map Automatically" reset step
+  (n8n switches mapping to manual on sheet selection).
 
 ## [0.10.0] - 2026-07-03
 
