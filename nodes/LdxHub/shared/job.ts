@@ -94,14 +94,14 @@ export async function createAndPollJob(
 	return { jobId: created.job_id, job };
 }
 
-/** Downloads the job's output file as n8n binary data. */
-export async function downloadOutputBinary(
+/** Downloads the job's output file (throws if the job returned none). */
+export async function downloadOutput(
 	this: IExecuteFunctions,
 	itemIndex: number,
 	service: JobService,
 	completed: { jobId: string; job: JobResponse },
 	options: { defaultFilename: string; overrideMimeType?: string; fallbackMimeType?: string },
-): Promise<IBinaryData> {
+): Promise<{ buffer: Buffer; filename: string; mimeType: string }> {
 	const outputFileId = completed.job.output_file_id;
 	if (!outputFileId) {
 		throw new NodeOperationError(
@@ -112,14 +112,25 @@ export async function downloadOutputBinary(
 	}
 
 	const download = await downloadFile.call(this, outputFileId);
-	const mimeType =
-		options.overrideMimeType ?? (download.mimeType || options.fallbackMimeType || 'application/octet-stream');
+	return {
+		buffer: download.buffer,
+		filename: download.filename ?? options.defaultFilename,
+		mimeType:
+			options.overrideMimeType ??
+			(download.mimeType || options.fallbackMimeType || 'application/octet-stream'),
+	};
+}
 
-	return await this.helpers.prepareBinaryData(
-		download.buffer,
-		download.filename ?? options.defaultFilename,
-		mimeType,
-	);
+/** Downloads the job's output file as n8n binary data. */
+export async function downloadOutputBinary(
+	this: IExecuteFunctions,
+	itemIndex: number,
+	service: JobService,
+	completed: { jobId: string; job: JobResponse },
+	options: { defaultFilename: string; overrideMimeType?: string; fallbackMimeType?: string },
+): Promise<IBinaryData> {
+	const output = await downloadOutput.call(this, itemIndex, service, completed, options);
+	return await this.helpers.prepareBinaryData(output.buffer, output.filename, output.mimeType);
 }
 
 function isNodeError(error: unknown): error is NodeOperationError | NodeApiError {
