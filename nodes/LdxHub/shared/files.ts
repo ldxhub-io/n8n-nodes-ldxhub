@@ -1,7 +1,7 @@
 import type { IExecuteFunctions, IHttpRequestOptions, JsonObject } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
-import { getBaseUrl } from './transport';
+import { getBaseUrl, withClientHeader } from './transport';
 
 export type UploadResponse = {
 	file_id: string;
@@ -37,7 +37,7 @@ export async function uploadFile(
 	return (await this.helpers.httpRequestWithAuthentication.call(
 		this,
 		'ldxHubApi',
-		options,
+		withClientHeader(options),
 	)) as UploadResponse;
 }
 
@@ -58,7 +58,7 @@ export async function downloadFile(
 		response = await this.helpers.httpRequestWithAuthentication.call(
 			this,
 			'ldxHubApi',
-			options,
+			withClientHeader(options),
 		);
 	} catch (error) {
 		const httpCode = (error as { httpCode?: string | number }).httpCode;

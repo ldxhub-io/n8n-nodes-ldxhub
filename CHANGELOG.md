@@ -13,9 +13,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.11.0...HEAD)
+
+## [0.11.0](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...0.11.0) - 2026-11-13
 
 ### Added
+- Requests carry an `X-LDXhub-Client: n8n-nodes-ldxhub/<version>` header (the package name and
+  version only), so LDX hub can count jobs by the client that created them
 - `examples/analyzedoc-demo.json`: standalone AnalyzeDoc demo (vision extraction from a PDF/image)
 - `examples/all-services-demo.json`: extended to 6 services with a new AnalyzeDoc lane
   (model → task & file → output flow, output formats filtered by uploaded file type)
@@ -26,7 +30,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   form-to-Google-Sheets workflows behind the n8n.io template gallery entries
 - `examples/README.md`: new "Ready-to-Use Templates" section listing them
 
+### Changed
+- The model and engine dropdowns load from the Base URL set in the credential (falling back
+  to `https://gw.ldxhub.io` until a credential is chosen), so they list what the gateway that
+  runs the jobs offers
+- RefineLoop output includes `model`, like the other resources
+- The six resources share one upload → create → poll → download flow (`shared/job.ts`)
+
 ### Fixed
+- Errors keep their message: a failed job (for example `StructFlow job … failed
+  [invalid_parameter]: …`), a missing or expired output file, or an API error is reported as
+  is and tied to its item, instead of being re-wrapped as a generic API error
+- RefineLoop with Output Mode "None" returns the job metadata instead of failing when the job
+  has no output file
 - `examples/all-services-demo.json`: file upload accept filters now include `.jpg` / `.tif`
   aliases (RenderOCR and AnalyzeDoc lanes) so common photo/scan extensions are selectable
 - Ready-to-use templates (`invoice-`, `business-card-analyzedoc-sheets.json`):
@@ -37,6 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples and templates: the hardcoded model `google/gemini-3.5-flash`, retired from LDX hub
   on 2026-11-07, is now `google/gemini-4-hydrogen` (`@high` / `@low` for AnalyzeDoc), so the
   workflows run again as imported
+- CI and the publish workflow pin Node.js 24: `lts/*` moved to Node 26, where `npm ci` fails to
+  build `isolated-vm` 6.1.2
 
 ## [0.10.0] - 2026-07-03
 

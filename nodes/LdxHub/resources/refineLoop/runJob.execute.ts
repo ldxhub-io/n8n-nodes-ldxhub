@@ -1,14 +1,13 @@
-import type {
-	IDataObject,
-	IExecuteFunctions,
-	INodeExecutionData,
-	JsonObject,
-} from 'n8n-workflow';
-import { NodeApiError, NodeOperationError } from 'n8n-workflow';
+import type { IDataObject, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 
-import { downloadFile, uploadFile } from '../../shared/files';
-import { pollJobUntilDone } from '../../shared/polling';
-import { ldxHubApiRequest } from '../../shared/transport';
+import {
+	createAndPollJob,
+	downloadOutputBinary,
+	handleItemError,
+	uploadInputBinary,
+} from '../../shared/job';
+
+const SERVICE = { basePath: '/refineloop', label: 'RefineLoop' };
 
 type RefineLoopOptions = {
 	domain?: string;
@@ -17,16 +16,6 @@ type RefineLoopOptions = {
 	customInstructions?: string;
 	removeHyphenation?: boolean;
 	excludeNumericSegments?: boolean;
-};
-
-type PollingSettings = {
-	serverWaitSeconds?: number;
-	pollingMaxAttempts?: number;
-};
-
-type CreateJobResponse = {
-	job_id: string;
-	[key: string]: unknown;
 };
 
 function buildRefineLoopBody(input: {
@@ -66,89 +55,47 @@ export async function runJobExecute(
 			const model = this.getNodeParameter('model', i) as string;
 			const maxRevisions = this.getNodeParameter('maxRevisions', i) as number;
 			const options = this.getNodeParameter('options', i, {}) as RefineLoopOptions;
-			const pollingSettings = this.getNodeParameter(
-				'pollingSettings',
-				i,
-				{},
-			) as PollingSettings;
 
-			const binaryMeta = this.helpers.assertBinaryData(i, binaryPropertyName);
-			const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-			const filename = binaryMeta.fileName ?? 'input.xliff';
-			const mimeType = binaryMeta.mimeType ?? 'application/octet-stream';
-
-			const uploadRes = await uploadFile.call(this, buffer, filename, mimeType);
+			const fileId = await uploadInputBinary.call(this, i, binaryPropertyName, {
+				filename: 'input.xliff',
+				mimeType: 'application/octet-stream',
+			});
 
 			const jobBody = buildRefineLoopBody({
-				fileId: uploadRes.file_id,
+				fileId,
 				model,
 				maxRevisions,
 				options,
 			});
-			const jobRes = (await ldxHubApiRequest.call(
-				this,
-				'POST',
-				'/refineloop/jobs',
-				jobBody,
-			)) as CreateJobResponse;
+			const completed = await createAndPollJob.call(this, i, SERVICE, jobBody);
 
-			const finalJob = await pollJobUntilDone.call(
-				this,
-				{
-					jobId: jobRes.job_id,
-					endpoint: `/refineloop/jobs/${encodeURIComponent(jobRes.job_id)}`,
-					serviceLabel: 'RefineLoop',
-				},
-				{
-					serverWaitSeconds: pollingSettings.serverWaitSeconds ?? 10,
-					pollingMaxAttempts: pollingSettings.pollingMaxAttempts ?? 180,
-				},
-				i,
-			);
+			const json = {
+				job_id: completed.jobId,
+				model,
+				status: completed.job.status,
+				output_file_id: completed.job.output_file_id,
+				usage: completed.job.usage,
+			};
 
-			if (!finalJob.output_file_id) {
-				throw new NodeOperationError(
-					this.getNode(),
-					`RefineLoop job ${jobRes.job_id} completed but returned no output_file_id`,
-					{ itemIndex: i },
-				);
+			// Output Mode "None" returns only the job metadata, so a missing output file is expected there.
+			if (!completed.job.output_file_id && options.outputMode === 'none') {
+				returnData.push({ json, pairedItem: { item: i } });
+				continue;
 			}
 
-			const download = await downloadFile.call(this, finalJob.output_file_id);
-			const outputBinary = await this.helpers.prepareBinaryData(
-				download.buffer,
-				download.filename ?? 'refined.xliff',
-				download.mimeType,
-			);
+			const outputBinary = await downloadOutputBinary.call(this, i, SERVICE, completed, {
+				defaultFilename: 'refined.xliff',
+			});
 
 			returnData.push({
-				json: {
-					job_id: jobRes.job_id,
-					status: finalJob.status,
-					output_file_id: finalJob.output_file_id,
-					usage: finalJob.usage,
-				},
+				json,
 				binary: {
 					[binaryPropertyName]: outputBinary,
 				},
 				pairedItem: { item: i },
 			});
 		} catch (error) {
-			if (this.continueOnFail()) {
-				const wrapped =
-					error instanceof NodeOperationError
-						? error
-						: new NodeOperationError(this.getNode(), error as Error, { itemIndex: i });
-				returnData.push({
-					json: items[i].json,
-					error: wrapped,
-					pairedItem: { item: i },
-				});
-				continue;
-			}
-			const ctx = (error as { context?: { itemIndex?: number } }).context;
-			if (ctx) ctx.itemIndex = i;
-			throw new NodeApiError(this.getNode(), error as JsonObject);
+			handleItemError.call(this, error, i, items, returnData);
 		}
 	}
 
