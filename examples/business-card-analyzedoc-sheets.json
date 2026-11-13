@@ -35,7 +35,7 @@
       "parameters": {
         "resource": "analyzeDoc",
         "binaryPropertyName": "card_file",
-        "model": "google/gemini-3.5-flash@high",
+        "model": "google/gemini-4-hydrogen@high",
         "system_prompt": "Extract the following fields from the provided business card.\n\nRules:\n- Copy values exactly as written on the card; do not translate or invent values.\n- email: lowercase.\n- phone / mobile: as printed, including the country code if shown, but do not start the value with a \"+\" (use \"81-3-1234-5678\" or \"(+81) 3-1234-5678\" instead of \"+81-3-1234-5678\"). This keeps the number readable as text in spreadsheets.\n- website: the URL as printed.\n- If a field is not present on the card, use an empty string \"\".\n- notes: any other information on the card not covered by the fields below (e.g. qualifications, certifications, taglines, a name in another script).\n\nFields:\n- full_name: the person's name\n- job_title: their title or role\n- company: company or organization name\n- department: department or division\n- email: email address\n- phone: office or landline phone number\n- mobile: mobile phone number\n- address: postal address\n- website: company or personal website URL\n- notes: any other information on the card",
         "example_output": "{\"full_name\":\"\",\"job_title\":\"\",\"company\":\"\",\"department\":\"\",\"email\":\"\",\"phone\":\"\",\"mobile\":\"\",\"address\":\"\",\"website\":\"\",\"notes\":\"\"}",
         "output_format": "json",

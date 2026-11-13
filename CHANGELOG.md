@@ -34,6 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fields — Extract From File (fromJson) nests them under `data`. All three
   form-to-Sheets templates now document the "Map Automatically" reset step
   (n8n switches mapping to manual on sheet selection).
+- Examples and templates: the hardcoded model `google/gemini-3.5-flash`, retired from LDX hub
+  on 2026-11-07, is now `google/gemini-4-hydrogen` (`@high` / `@low` for AnalyzeDoc), so the
+  workflows run again as imported
 
 ## [0.10.0] - 2026-07-03
 

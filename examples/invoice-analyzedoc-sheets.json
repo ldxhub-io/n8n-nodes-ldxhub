@@ -35,7 +35,7 @@
       "parameters": {
         "resource": "analyzeDoc",
         "binaryPropertyName": "invoice_file",
-        "model": "google/gemini-3.5-flash@high",
+        "model": "google/gemini-4-hydrogen@high",
         "system_prompt": "Extract the following fields from the provided invoice document.\n\nRules:\n- Dates: ISO 8601 format (YYYY-MM-DD).\n- Monetary amounts (subtotal, tax, total): plain numbers without currency symbols or thousands separators.\n- currency: ISO 4217 code (e.g. \"USD\", \"EUR\", \"JPY\").\n- Phone or fax numbers, if any: do not start the value with a \"+\" (use \"81-3-1234-5678\" or \"(+81) 3-1234-5678\") so they stay readable as text in spreadsheets.\n- vendor_tax_id: the vendor's tax registration number (VAT ID, EIN, or a local equivalent such as a Japanese qualified invoice issuer number).\n- If a field is not present in the document, use an empty string \"\" for text fields and 0 for amounts.\n\nFields:\n- invoice_number: the invoice identifier\n- issue_date: date the invoice was issued\n- due_date: payment due date\n- vendor_name: name of the issuing company\n- vendor_address: full address of the issuing company\n- vendor_tax_id: vendor's tax registration number\n- bill_to: name of the billed customer or company\n- subtotal: amount before tax\n- tax: tax amount\n- total: total amount due\n- currency: currency of the amounts\n- payment_terms: payment terms as written (e.g. \"Net 30\")",
         "example_output": "{\"invoice_number\":\"\",\"issue_date\":\"\",\"due_date\":\"\",\"vendor_name\":\"\",\"vendor_address\":\"\",\"vendor_tax_id\":\"\",\"bill_to\":\"\",\"subtotal\":1234.56,\"tax\":123.45,\"total\":1358.01,\"currency\":\"\",\"payment_terms\":\"\"}",
         "output_format": "json",

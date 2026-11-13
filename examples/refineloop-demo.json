@@ -32,7 +32,7 @@
       "parameters": {
         "resource": "refineLoop",
         "binaryPropertyName": "data",
-        "model": "google/gemini-3.5-flash",
+        "model": "google/gemini-4-hydrogen",
         "options": {},
         "pollingSettings": {
           "pollingMaxAttempts": 180,

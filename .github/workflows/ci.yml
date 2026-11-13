@@ -21,7 +21,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          # Pinned to 24: on Node 26 (LTS since 2026-10), npm ci fails to build isolated-vm 6.1.2.
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
