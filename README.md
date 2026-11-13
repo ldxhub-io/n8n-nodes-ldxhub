@@ -9,7 +9,7 @@
 > ✅ **One key for everything** — OpenAI, Anthropic, Google, AWS, Azure, xAI  
 > ✅ **30-second sign-up** — GitHub, Google, or email; your API key is shown immediately
 
-n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), vision document analysis (AnalyzeDoc), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), and plain-text/JSONL extraction (ExtractDoc).
+n8n community node for **LDX hub** — AI-powered document processing platform: structured data extraction (StructFlow), vision document analysis (AnalyzeDoc), XLIFF translation refinement (RefineLoop), layout-preserving OCR (RenderOCR), text-based PDF conversion (CastDoc), plain-text/JSONL extraction (ExtractDoc), speech-to-text (CastVoice), and text-to-speech (RenderVoice).
 
 ## Table of Contents
 
@@ -25,6 +25,8 @@ n8n community node for **LDX hub** — AI-powered document processing platform: 
   - [RenderOCR](#renderocr--pdfimage-to-office)
   - [CastDoc](#castdoc--text-based-pdf-to-office-no-ocr)
   - [ExtractDoc](#extractdoc--plain-text-or-jsonl-extraction-no-ai-no-ocr)
+  - [CastVoice](#castvoice--speech-to-text-or-subtitles)
+  - [RenderVoice](#rendervoice--text-to-speech)
 - [AI Agent Integration](#ai-agent-integration)
 - [Polling Settings](#polling-settings)
 - [Troubleshooting](#troubleshooting)
@@ -44,7 +46,7 @@ After [installation](#installation):
 4. Select this credential in each LDXhub node
 5. Run the workflow — enter your API key (and optionally a custom host) in the form
 
-All 6 services (StructFlow / AnalyzeDoc / RefineLoop / RenderOCR / CastDoc / ExtractDoc) accessible from a single Form Trigger. **The API key is consumed per execution, never stored in n8n.**
+The 6 document services (StructFlow / AnalyzeDoc / RefineLoop / RenderOCR / CastDoc / ExtractDoc) accessible from a single Form Trigger. **The API key is consumed per execution, never stored in n8n.**
 
 For traditional single-service usage with a static credential, see [Usage](#usage) below.
 
@@ -56,6 +58,8 @@ For traditional single-service usage with a static credential, see [Usage](#usag
 - **RenderOCR**: Convert PDFs and images to Word/Excel/PowerPoint with layout-preserving OCR (via industry-leading OCR engines)
 - **CastDoc**: Convert text-based PDFs to Word/Excel/PowerPoint without OCR (high-fidelity layout preservation for digital-born documents)
 - **ExtractDoc**: Extract plain text or JSONL from PDF/DOCX/XLSX/PPTX using the `ki/extract` engine (no AI, no OCR, free tier) — ideal as a preprocessing step before StructFlow
+- **CastVoice**: Transcribe speech in WAV/MP3 audio to plain text or SRT subtitles (Google and Azure speech engines, 100+ languages)
+- **RenderVoice**: Turn text into speech audio (WAV) with hundreds of Google and Azure voices, optionally at a custom speaking rate
 - **One credential for all AI providers**: OpenAI, Anthropic Claude, Google Gemini, AWS Nova, Azure OpenAI, xAI Grok — accessed through a single LDX hub API key
 - HTTP long-polling architecture — compatible with n8n Cloud execution model
 - Proven at scale: tested with 1.19M-character academic papers
@@ -161,6 +165,22 @@ The Model and Engine dropdowns load from LDX hub's public metadata endpoints wit
 
 **Example**: [ExtractDoc workflow](examples/extractdoc-demo.json)
 
+### CastVoice — speech to text or subtitles
+
+1. Resource: **CastVoice** → Operation: **Run Transcription Job**
+2. Provide an audio file via binary input (WAV or MP3, as listed by the engine)
+3. Choose an engine, a recognizer (the language, and for some engines the model), and the output format (`text` or `srt`)
+
+The engine, recognizer, and output format lists are loaded from LDX hub, and the node checks the input file type against the selected engine before uploading. With `text`, the transcript is also returned as `text` in the output JSON. **Split by Sentence** (Options) splits segments at sentence boundaries.
+
+### RenderVoice — text to speech
+
+1. Resource: **RenderVoice** → Operation: **Run Speech Synthesis Job**
+2. Type or map the text (Input Mode **Text**), or provide a UTF-8 text file (Input Mode **Binary File**)
+3. Choose an engine, a locale, a voice, and the output format (`wave`); optionally set the **Speaking Rate** (0.5–2.0)
+
+The locale and voice lists depend on the selected engine (and the voices on the locale) and are loaded from LDX hub. The audio is written to the binary field you name.
+
 ## AI Agent Integration
 
 The LDXhub node is marked as `usableAsTool: true`, so it can be attached to an **AI Agent** node as a tool. This enables agentic workflows where an AI agent autonomously decides when to extract structured data, translate documents, or convert files using LDX hub.
@@ -170,6 +190,7 @@ Example use cases:
 - Customer support agent that extracts structured complaint data from incoming emails (StructFlow)
 - Document processing agent that automatically OCRs and translates uploaded PDFs (RenderOCR → RefineLoop)
 - Knowledge base ingestion agent that converts and structures diverse document formats (CastDoc → StructFlow)
+- Meeting assistant that transcribes recordings and pulls out decisions and action items (CastVoice → StructFlow)
 
 ## Polling Settings
 

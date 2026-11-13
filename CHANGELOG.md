@@ -13,7 +13,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.11.0...HEAD)
+## [Unreleased](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.12.0...HEAD)
+
+## [0.12.0](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.11.0...0.12.0) - 2026-11-13
+
+### Added
+- New resource: **CastVoice** — transcribe speech in an audio file to plain text or SRT subtitles.
+  The engine, recognizer and output format lists are loaded from LDX hub (Google Speech-to-Text
+  V2 and Azure Speech to text at present); the input file type is checked against the engine
+  before uploading; `text` output is also returned as `text` in the JSON; optional Split by
+  Sentence
+- New resource: **RenderVoice** — turn text into speech audio. Input is typed or mapped text, or
+  a UTF-8 text file; the engine, locale, voice (filtered by locale) and output format lists are
+  loaded from LDX hub (Google Text-to-Speech and Azure Text to speech at present); optional
+  Speaking Rate (0.5–2.0) for engines that support it
 
 ## [0.11.0](https://github.com/ldxhub-io/n8n-nodes-ldxhub/compare/0.10.0...0.11.0) - 2026-11-13
 

@@ -10,23 +10,34 @@ import { getAnalyzeDocModels } from './methods/loadOptions/getAnalyzeDocModels';
 import { getAnalyzeDocOutputFormats } from './methods/loadOptions/getAnalyzeDocOutputFormats';
 import { getCastDocEngines } from './methods/loadOptions/getCastDocEngines';
 import { getCastDocOutputFormats } from './methods/loadOptions/getCastDocOutputFormats';
+import { getCastVoiceEngines } from './methods/loadOptions/getCastVoiceEngines';
+import { getCastVoiceOutputFormats } from './methods/loadOptions/getCastVoiceOutputFormats';
+import { getCastVoiceRecognizers } from './methods/loadOptions/getCastVoiceRecognizers';
 import { getExtractDocEngines } from './methods/loadOptions/getExtractDocEngines';
 import { getExtractDocOutputFormats } from './methods/loadOptions/getExtractDocOutputFormats';
 import { getModels } from './methods/loadOptions/getModels';
 import { getRenderOcrEngines } from './methods/loadOptions/getRenderOcrEngines';
 import { getRenderOcrLanguages } from './methods/loadOptions/getRenderOcrLanguages';
 import { getRenderOcrOutputFormats } from './methods/loadOptions/getRenderOcrOutputFormats';
+import { getRenderVoiceEngines } from './methods/loadOptions/getRenderVoiceEngines';
+import { getRenderVoiceLocales } from './methods/loadOptions/getRenderVoiceLocales';
+import { getRenderVoiceOutputFormats } from './methods/loadOptions/getRenderVoiceOutputFormats';
+import { getRenderVoiceVoices } from './methods/loadOptions/getRenderVoiceVoices';
 import { getStructFlowModels } from './methods/loadOptions/getStructFlowModels';
 import { analyzeDocDescription } from './resources/analyzeDoc';
 import { runJobExecute as analyzeDocRunJobExecute } from './resources/analyzeDoc/runJob.execute';
 import { castDocDescription } from './resources/castDoc';
 import { runJobExecute as castDocRunJobExecute } from './resources/castDoc/runJob.execute';
+import { castVoiceDescription } from './resources/castVoice';
+import { runJobExecute as castVoiceRunJobExecute } from './resources/castVoice/runJob.execute';
 import { extractDocDescription } from './resources/extractDoc';
 import { runJobExecute as extractDocRunJobExecute } from './resources/extractDoc/runJob.execute';
 import { refineLoopDescription } from './resources/refineLoop';
 import { runJobExecute as refineLoopRunJobExecute } from './resources/refineLoop/runJob.execute';
 import { renderOcrDescription } from './resources/renderOcr';
 import { runJobExecute as renderOcrRunJobExecute } from './resources/renderOcr/runJob.execute';
+import { renderVoiceDescription } from './resources/renderVoice';
+import { runJobExecute as renderVoiceRunJobExecute } from './resources/renderVoice/runJob.execute';
 import { structFlowDescription } from './resources/structFlow';
 import { runJobExecute as structFlowRunJobExecute } from './resources/structFlow/runJob.execute';
 
@@ -67,6 +78,10 @@ export class LdxHub implements INodeType {
 						value: 'castDoc',
 					},
 					{
+						name: 'CastVoice',
+						value: 'castVoice',
+					},
+					{
 						name: 'ExtractDoc',
 						value: 'extractDoc',
 					},
@@ -79,6 +94,10 @@ export class LdxHub implements INodeType {
 						value: 'renderOcr',
 					},
 					{
+						name: 'RenderVoice',
+						value: 'renderVoice',
+					},
+					{
 						name: 'StructFlow',
 						value: 'structFlow',
 					},
@@ -87,9 +106,11 @@ export class LdxHub implements INodeType {
 			},
 			...analyzeDocDescription,
 			...castDocDescription,
+			...castVoiceDescription,
 			...extractDocDescription,
 			...refineLoopDescription,
 			...renderOcrDescription,
+			...renderVoiceDescription,
 			...structFlowDescription,
 		],
 	};
@@ -100,12 +121,19 @@ export class LdxHub implements INodeType {
 			getAnalyzeDocOutputFormats,
 			getCastDocEngines,
 			getCastDocOutputFormats,
+			getCastVoiceEngines,
+			getCastVoiceOutputFormats,
+			getCastVoiceRecognizers,
 			getExtractDocEngines,
 			getExtractDocOutputFormats,
 			getModels,
 			getRenderOcrEngines,
 			getRenderOcrLanguages,
 			getRenderOcrOutputFormats,
+			getRenderVoiceEngines,
+			getRenderVoiceLocales,
+			getRenderVoiceOutputFormats,
+			getRenderVoiceVoices,
 			getStructFlowModels,
 		},
 	};
@@ -121,6 +149,9 @@ export class LdxHub implements INodeType {
 		if (resource === 'castDoc' && operation === 'runJob') {
 			return castDocRunJobExecute.call(this, items);
 		}
+		if (resource === 'castVoice' && operation === 'runJob') {
+			return castVoiceRunJobExecute.call(this, items);
+		}
 		if (resource === 'extractDoc' && operation === 'runJob') {
 			return extractDocRunJobExecute.call(this, items);
 		}
@@ -129,6 +160,9 @@ export class LdxHub implements INodeType {
 		}
 		if (resource === 'renderOcr' && operation === 'runJob') {
 			return renderOcrRunJobExecute.call(this, items);
+		}
+		if (resource === 'renderVoice' && operation === 'runJob') {
+			return renderVoiceRunJobExecute.call(this, items);
 		}
 		if (resource === 'structFlow' && operation === 'runJob') {
 			return structFlowRunJobExecute.call(this, items);
