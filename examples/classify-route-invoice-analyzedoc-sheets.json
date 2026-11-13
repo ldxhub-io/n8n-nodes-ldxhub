@@ -98,7 +98,7 @@
       "parameters": {
         "resource": "analyzeDoc",
         "binaryPropertyName": "document_file",
-        "model": "google/gemini-3.5-flash@low",
+        "model": "google/gemini-4-hydrogen@low",
         "system_prompt": "Classify this document image into exactly one of these types: invoice, receipt, business_card, contract, blank, other. Judge from the overall layout and structure of the page.",
         "example_output": "{\"document_type\": \"other\", \"reason\": \"layout does not match any listed type\"}",
         "output_format": "json",
@@ -246,7 +246,7 @@
       "parameters": {
         "resource": "analyzeDoc",
         "binaryPropertyName": "document_file",
-        "model": "google/gemini-3.5-flash@high",
+        "model": "google/gemini-4-hydrogen@high",
         "system_prompt": "Extract the key fields from this invoice. Rules: Dates in YYYY-MM-DD format. All amounts as plain numbers (no currency symbols, no thousands separators). vendor_tax_id is the vendor's tax or registration number if present. payment_terms exactly as written on the invoice (e.g., \"Net 30\"). Use an empty string for any field that is not present.",
         "example_output": "{\"invoice_number\": \"\", \"issue_date\": \"\", \"due_date\": \"\", \"vendor_name\": \"\", \"vendor_address\": \"\", \"vendor_tax_id\": \"\", \"bill_to\": \"\", \"subtotal\": 1234.56, \"tax\": 123.45, \"total\": 1358.01, \"currency\": \"\", \"payment_terms\": \"\"}",
         "output_format": "json",

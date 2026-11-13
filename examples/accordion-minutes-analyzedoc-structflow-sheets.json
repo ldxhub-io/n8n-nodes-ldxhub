@@ -35,7 +35,7 @@
       "parameters": {
         "resource": "analyzeDoc",
         "binaryPropertyName": "minutes_file",
-        "model": "google/gemini-3.5-flash@high",
+        "model": "google/gemini-4-hydrogen@high",
         "system_prompt": "You are given meeting minutes that may span many pages. Split the document into one item per agenda topic.\n\nRules:\n- Cover the entire document: every agenda topic becomes exactly one item, in document order.\n- An agenda topic may continue across page boundaries — keep it as one single item; never split a topic by page and never merge different topics.\n- agenda_no: the topic number as written in the document (integer). If topics are unnumbered, use the 1-based position.\n- agenda_title: the topic heading as written.\n- content: the full text of that topic's section, transcribed faithfully in the original language (do not summarize, translate, or omit anything). Keep all decisions, action items, owners, and deadlines exactly as written.\n- Do not include the meeting header (title, date, attendees) or page headers/footers in any item's content.",
         "example_output": "{\"items\":[{\"agenda_no\":1,\"agenda_title\":\"\",\"content\":\"\"}]}",
         "output_format": "json",
@@ -77,7 +77,7 @@
         "resource": "structFlow",
         "inputMode": "binary",
         "binaryPropertyName": "segments_jsonl",
-        "model": "google/gemini-3.5-flash",
+        "model": "google/gemini-4-hydrogen",
         "system_prompt": "The input text is one agenda segment from meeting minutes. The first line is a header in the form \"[Agenda N] Title\". Extract every decision and every action item from the segment.\n\nRules:\n- agenda_no / agenda_title: copy from the header line (agenda_no as an integer).\n- items: one element per decision or action item found in the text. Return an empty array if there are none.\n- item_type: \"decision\" for decisions and agreements, \"action\" for tasks someone has to do.\n- item: the decision or task itself, in the original language, without the owner and deadline parts.\n- owner: the responsible person or team as written; \"\" if not stated.\n- due_date: the deadline in ISO 8601 format (YYYY-MM-DD) when an exact date is given; otherwise copy the deadline expression as written (e.g. \"next meeting\"); \"\" if none.",
         "example_output": "{\"agenda_no\":1,\"agenda_title\":\"\",\"items\":[{\"item_type\":\"action\",\"item\":\"\",\"owner\":\"\",\"due_date\":\"\"}]}",
         "pollingSettings": {
