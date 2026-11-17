@@ -1,17 +1,17 @@
 import type {
 	IAuthenticateGeneric,
 	Icon,
+	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
 
-// eslint-disable-next-line @n8n/community-nodes/credential-test-required
 export class LdxHubApi implements ICredentialType {
 	name = 'ldxHubApi';
 
 	displayName = 'LDXhub API';
 
-	icon: Icon = 'file:ldxhub.svg';
+	icon: Icon = { light: 'file:ldxhub.svg', dark: 'file:ldxhub.dark.svg' };
 
 	documentationUrl = 'https://gw.portal.ldxhub.io/introduction';
 
@@ -41,6 +41,17 @@ export class LdxHubApi implements ICredentialType {
 			headers: {
 				Authorization: '=Bearer {{$credentials?.apiKey}}',
 			},
+		},
+	};
+
+	// Lists the uploaded files: a free, read-only call that needs the API key (the models and
+	// engines lists do not, so they cannot tell a wrong key). An empty Base URL falls back to the
+	// default, as in the node.
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: '={{$credentials?.baseUrl || "https://gw.ldxhub.io"}}',
+			url: '/files',
+			method: 'GET',
 		},
 	};
 }
