@@ -87,7 +87,7 @@ In your n8n instance:
 5. In n8n, create a new **LDXhub API** credential:
    - **Base URL**: `https://gw.ldxhub.io` (default; leave as-is for production)
    - **API Key**: paste the key from step 4
-6. Click **Save**
+6. Click **Save** — n8n tests the key with LDX hub; if it reports **Authorization failed**, the key is wrong
 
 If API calls fail with 401 Unauthorized, verify:
 - The API key is active (shown with a green dot in the DevPortal)
@@ -101,7 +101,7 @@ For workflows where the API key should be provided dynamically per execution (e.
 1. Create a new **LDXhub API** credential
 2. Switch the **API Key** field to **Expression** mode
 3. Enter an expression that resolves at execution time, e.g., `{{ $json.api_key }}`
-4. Save the credential
+4. Save the credential (n8n skips the connection test for a credential that uses an expression; the key is checked when the workflow runs)
 
 The Model and Engine dropdowns load from LDX hub's public metadata endpoints without authentication, so the node UI works normally during workflow design even when the API Key is an unresolved expression.
 

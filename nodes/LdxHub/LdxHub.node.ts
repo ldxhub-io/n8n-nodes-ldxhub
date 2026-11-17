@@ -45,7 +45,7 @@ export class LdxHub implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'LDXhub',
 		name: 'ldxHub',
-		icon: 'file:ldxhub.svg',
+		icon: { light: 'file:ldxhub.svg', dark: 'file:ldxhub.dark.svg' },
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',

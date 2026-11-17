@@ -132,7 +132,9 @@ n8n Cloud の `@n8n/community-nodes/no-restricted-globals` ルール（`setTimeo
 - [ ] セルフホスト n8n をローカルで起動
 - [ ] `npm link` で本パッケージを n8n にリンク
 - [ ] 本番 Credentials（`https://gw.ldxhub.io` + API key）で Credentials 作成・
-      test エンドポイント (`GET /refineloop/models`) の 200 OK 確認
+      test エンドポイント (`GET /files`) の 200 OK 確認
+      （資格情報の test は 2026-11 の n8n の審査の指摘で入れた。`/models`・`/engines` は鍵なしで通るので、鍵の誤りを
+      見分けられない。鍵が要る道で、課金のない `GET /files` を使う。式の API Key は n8n が test しない）
 - [ ] RefineLoop ノードを workflow に配置、model ドロップダウン動的ロード確認
 - [ ] 小さめ XLIFF を binary 入力で渡し、`max_revisions=3` で実行
 - [ ] ?wait 動作の目視確認（ネットワークタブで 10 秒待機するリクエストを確認）
